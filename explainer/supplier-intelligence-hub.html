@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supplier Intelligence Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Stage tokens. The stage is always dark. */
+    --bg: #0E1422;
+    --panel: #17213A;
+    --ink: #E9EDF5;
+    --muted: #8A96AD;
+    --line: #2A3550;
+    --blue: #5AA9E6;
+    --gold: #F2C14E;
+    --coral: #EF7A63;
+    --teal: #56C3A5;
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+    /* Page chrome tokens. These follow light and dark mode. */
+    --page-bg: #F4F5F8;
+    --page-ink: #1B2233;
+    --page-muted: #5B6578;
+    --page-line: #D5D9E2;
+    --btn-bg: #FFFFFF;
+    --focus: #1F6FB2;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page-bg: #090D17;
+      --page-ink: #E9EDF5;
+      --page-muted: #8A96AD;
+      --page-line: #2A3550;
+      --btn-bg: #17213A;
+      --focus: #F2C14E;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page-bg);
+    color: var(--page-ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+  }
+  main {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+  }
+
+  /* Stage */
+  .stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--bg);
+    border-radius: 10px;
+    overflow: hidden;
+    container-type: inline-size;
+  }
+  .scene {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .6s ease, visibility 0s linear .6s;
+  }
+  .scene.active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .6s ease, visibility 0s linear 0s;
+  }
+  .scene.instant, .scene.instant * { transition: none !important; }
+
+  /* SVG type */
+  .serif { font-family: var(--serif); }
+  .sans { font-family: var(--sans); }
+  .title { font-family: var(--serif); font-size: 36px; font-weight: 500; fill: var(--ink); }
+  .ink { fill: var(--ink); }
+  .muted { fill: var(--muted); }
+  .gold { fill: var(--gold); }
+  .coral { fill: var(--coral); }
+
+  /* Reveal model: data-s="N" shows at step N or higher. */
+  .stage [data-s] {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity .6s ease var(--d, 0s),
+      transform .6s ease var(--d, 0s),
+      visibility 0s linear calc(var(--d, 0s) + .6s);
+  }
+  .stage [data-s].r { transform: translateY(10px); }
+  .stage [data-s].grow { transform: scaleX(0); transform-box: fill-box; transform-origin: left center; }
+  .stage [data-s].on {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition:
+      opacity .6s ease var(--d, 0s),
+      transform .6s ease var(--d, 0s),
+      visibility 0s linear var(--d, 0s);
+  }
+
+  /* Arrow: the group stays visible, the path draws, the head fades in after. */
+  .stage [data-s].arrow { opacity: 1; visibility: visible; transform: none; }
+  .arrow path {
+    fill: none;
+    stroke-linecap: butt;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset .7s ease var(--d, 0s);
+  }
+  .arrow.on path { stroke-dashoffset: 0; }
+  .arrow .head { opacity: 0; transition: opacity .2s ease 0s; }
+  .arrow.on .head { opacity: 1; transition: opacity .25s ease calc(var(--d, 0s) + .7s); }
+
+  /* Move: a wrapper that translates to (--mx, --my) at step N. */
+  .stage [data-move] { transition: transform 1.1s cubic-bezier(.45, 0, .2, 1) var(--d, 0s); }
+  .stage [data-move].moved { transform: translate(var(--mx, 0px), var(--my, 0px)); }
+
+  /* Caption overlay */
+  .caption {
+    position: absolute;
+    left: 50%;
+    bottom: 3.2%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 84%;
+    padding: .55cqw 1.4cqw;
+    border-radius: .6cqw;
+    background: rgba(14, 20, 34, .86);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 1.9cqw;
+    line-height: 1.35;
+    text-align: center;
+    transition: opacity .25s ease;
+  }
+  .caption.swap { opacity: 0; }
+  .caption.off { display: none; }
+
+  .badge {
+    position: absolute;
+    top: 2.6%;
+    right: 2.2%;
+    padding: .3cqw .8cqw;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    color: var(--muted);
+    font-family: var(--sans);
+    font-size: 1.15cqw;
+    letter-spacing: .01em;
+  }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    transition: opacity .25s ease;
+  }
+  .controls.hidden { opacity: 0; }
+  .controls.hidden:has(:focus-visible) { opacity: 1; }
+  button {
+    font: 500 14px/1 var(--sans);
+    color: var(--page-ink);
+    background: var(--btn-bg);
+    border: 1px solid var(--page-line);
+    border-radius: 6px;
+    padding: 9px 14px;
+    cursor: pointer;
+  }
+  button[aria-pressed="true"] { border-color: var(--focus); box-shadow: inset 0 0 0 1px var(--focus); }
+  button:focus-visible, summary:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .status { margin-left: auto; color: var(--page-muted); font-size: 14px; }
+  .hint { color: var(--page-muted); font-size: 13px; margin: 10px 0 0; }
+
+  /* Narration panel */
+  details.script {
+    margin-top: 22px;
+    border: 1px solid var(--page-line);
+    border-radius: 8px;
+    padding: 0 18px;
+  }
+  details.script summary {
+    cursor: pointer;
+    padding: 14px 0;
+    font-weight: 600;
+  }
+  details.script h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 20px;
+    margin: 18px 0 6px;
+  }
+  details.script ol { margin: 0 0 8px; padding-left: 22px; }
+  details.script li { margin: 3px 0; }
+  details.script .note { color: var(--page-muted); font-size: 13px; margin: 0 0 16px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="stage" id="stage" aria-label="Animated explainer stage">
+
+    <!-- Title card -->
+    <svg class="scene" viewBox="0 0 960 540" role="img" aria-label="Title card">
+      <text class="serif ink r" data-s="0" x="480" y="222" text-anchor="middle" font-size="64" font-weight="500">From Vendor Noise</text>
+      <text class="serif ink r" data-s="0" style="--d:.25s" x="480" y="298" text-anchor="middle" font-size="64" font-weight="500">to Sourcing Decisions</text>
+      <line class="fade" data-s="0" style="--d:.6s" x1="440" y1="334" x2="520" y2="334" stroke="#F2C14E" stroke-width="2"/>
+      <text class="sans muted r" data-s="0" style="--d:.8s" x="480" y="376" text-anchor="middle" font-size="24">The Supplier Intelligence Hub</text>
+    </svg>
+
+    <!-- Scene 1 -->
+    <svg class="scene" viewBox="0 0 960 540" role="img" aria-label="Scene 1">
+      <text class="title r" data-s="0" x="60" y="72">Too many vendors, too many places</text>
+      <g id="dots-grey"></g>
+      <g id="dots-hot"></g>
+      <text class="sans muted r" data-s="1" style="--d:.9s" x="90" y="428" font-size="16">150 dots. Each dot is one vendor.</text>
+      <g id="s1-chips"></g>
+      <text class="sans coral r" data-s="4" x="600" y="430" font-size="22" font-weight="500">No single view of all signals.</text>
+    </svg>
+
+    <!-- Scene 2 -->
+    <svg class="scene" viewBox="0 0 960 540" role="img" aria-label="Scene 2">
+      <text class="title r" data-s="0" x="60" y="72">One flow, two speeds</text>
+      <g id="s2-chips"></g>
+
+      <g class="arrow" data-s="2">
+        <path pathLength="1" d="M240 258 C300 258 296 172 346 172" stroke="#5AA9E6" stroke-width="2"/>
+        <polygon class="head" points="0,-6 11,0 0,6" transform="translate(346 172)" fill="#5AA9E6"/>
+      </g>
+      <g class="r" data-s="2" style="--d:.6s">
+        <rect x="360" y="120" width="230" height="104" rx="10" fill="#17213A" stroke="#5AA9E6" stroke-width="2"/>
+        <text class="serif ink" x="384" y="164" font-size="23">Weekly brief</text>
+        <text class="sans muted" x="384" y="192" font-size="15">The full picture</text>
+      </g>
+
+      <g class="arrow" data-s="3">
+        <path pathLength="1" d="M240 258 C300 258 296 342 346 342" stroke="#EF7A63" stroke-width="2"/>
+        <polygon class="head" points="0,-6 11,0 0,6" transform="translate(346 342)" fill="#EF7A63"/>
+      </g>
+      <g class="r" data-s="3" style="--d:.6s">
+        <rect x="360" y="290" width="230" height="104" rx="10" fill="#17213A" stroke="#EF7A63" stroke-width="2"/>
+        <text class="serif ink" x="384" y="334" font-size="23">Early warning</text>
+        <text class="sans muted" x="384" y="362" font-size="15">Always on</text>
+      </g>
+
+      <g class="arrow" data-s="4">
+        <path pathLength="1" d="M596 172 C660 172 652 250 706 250" stroke="#8A96AD" stroke-width="2"/>
+        <polygon class="head" points="0,-6 11,0 0,6" transform="translate(706 250)" fill="#8A96AD"/>
+      </g>
+      <g class="arrow" data-s="4">
+        <path pathLength="1" d="M596 342 C660 342 652 264 706 264" stroke="#8A96AD" stroke-width="2"/>
+        <polygon class="head" points="0,-6 11,0 0,6" transform="translate(706 264)" fill="#8A96AD"/>
+      </g>
+      <g class="r" data-s="4" style="--d:.7s">
+        <rect x="720" y="205" width="180" height="104" rx="10" fill="#17213A" stroke="#F2C14E" stroke-width="2"/>
+        <text class="serif ink" x="744" y="249" font-size="23">Slack hub</text>
+        <text class="sans muted" x="744" y="277" font-size="15">One place</text>
+      </g>
+    </svg>
+
+    <!-- Scene 3 -->
+    <svg class="scene" viewBox="0 0 960 540" role="img" aria-label="Scene 3">
+      <text class="title r" data-s="0" x="60" y="72">Every signal gets a posture</text>
+
+      <g class="r" data-s="1">
+        <rect x="320" y="110" width="280" height="155" rx="10" fill="#17213A" stroke="#2A3550"/>
+        <text class="serif ink" x="344" y="158" font-size="23">Protect Margin</text>
+        <text class="sans muted" x="344" y="186" font-size="15">Hold price and terms</text>
+      </g>
+      <g class="r" data-s="1" style="--d:.15s">
+        <rect x="620" y="110" width="280" height="155" rx="10" fill="#17213A" stroke="#2A3550"/>
+        <text class="serif ink" x="644" y="158" font-size="23">Increase Leverage</text>
+        <text class="sans muted" x="644" y="186" font-size="15">Use timing and options</text>
+      </g>
+      <g class="r" data-s="1" style="--d:.3s">
+        <rect x="320" y="285" width="280" height="155" rx="10" fill="#17213A" stroke="#2A3550"/>
+        <text class="serif ink" x="344" y="333" font-size="23">Reduce Hidden Risk</text>
+        <text class="sans muted" x="344" y="361" font-size="15">Find gaps early</text>
+      </g>
+      <g class="r" data-s="1" style="--d:.45s">
+        <rect x="620" y="285" width="280" height="155" rx="10" fill="#17213A" stroke="#2A3550"/>
+        <text class="serif ink" x="644" y="333" font-size="23">Improve Resilience</text>
+        <text class="sans muted" x="644" y="361" font-size="15">Plan backups and exits</text>
+      </g>
+      <rect class="fade" data-s="3" style="--d:.9s" x="620" y="110" width="280" height="155" rx="10" fill="none" stroke="#F2C14E" stroke-width="2.5"/>
+
+      <text class="sans muted r" data-s="2" data-hide="3" x="80" y="196" font-size="14">New signal</text>
+      <g data-move="3" style="--mx:610px; --my:-2px">
+        <g class="r" data-s="2">
+          <rect x="80" y="212" width="140" height="36" rx="18" fill="#F2C14E"/>
+          <text class="sans" x="150" y="236" text-anchor="middle" font-size="16" font-weight="600" fill="#0E1422">Vendor X</text>
+        </g>
+      </g>
+      <text class="sans ink r" data-s="2" data-hide="3" style="--d:.2s" x="80" y="286" font-size="15">Renews in 90 days</text>
+      <text class="sans ink r" data-s="2" data-hide="3" style="--d:.35s" x="80" y="310" font-size="15">Draft raises the price cap</text>
+    </svg>
+
+    <!-- Scene 4 -->
+    <svg class="scene" viewBox="0 0 960 540" role="img" aria-label="Scene 4">
+      <text class="title r" data-s="0" x="60" y="72">From signal to dollars</text>
+      <text class="sans ink r" data-s="1" x="60" y="116" font-size="20">Vendor X, annual spend: $1,000,000 <tspan class="muted">(illustrative)</tspan></text>
+
+      <text class="sans muted r" data-s="2" x="60" y="164" font-size="15">Old cap 2%</text>
+      <rect class="grow" data-s="2" style="--d:.1s" x="200" y="140" width="200" height="36" rx="3" fill="#5AA9E6"/>
+      <text class="sans ink r" data-s="2" style="--d:.6s" x="412" y="164" font-size="17" font-weight="600">$20,000</text>
+      <text class="sans muted r" data-s="2" style="--d:.7s" x="200" y="198" font-size="14">$1,000,000 × 2% = $20,000</text>
+
+      <text class="sans muted r" data-s="3" x="60" y="242" font-size="15">Draft cap 6%</text>
+      <rect class="grow" data-s="3" style="--d:.1s" x="200" y="218" width="600" height="36" rx="3" fill="#EF7A63"/>
+      <text class="sans ink r" data-s="3" style="--d:.6s" x="812" y="242" font-size="17" font-weight="600">$60,000</text>
+      <text class="sans muted r" data-s="3" style="--d:.7s" x="200" y="276" font-size="14">$1,000,000 × 6% = $60,000</text>
+
+      <rect class="fade" data-s="4" x="398" y="213" width="404" height="46" rx="4" fill="none" stroke="#F2C14E" stroke-width="2.5"/>
+      <text class="serif gold r" data-s="4" style="--d:.3s" x="400" y="310" font-size="23">$40,000 more exposure each year</text>
+      <text class="sans muted r" data-s="4" style="--d:.45s" x="400" y="334" font-size="14">$60,000 − $20,000 = $40,000</text>
+      <text class="sans muted r" data-s="4" style="--d:.6s" x="400" y="356" font-size="13">Annual view. Multi-year compounding is not shown.</text>
+
+      <g class="r" data-s="5">
+        <rect x="60" y="376" width="840" height="48" rx="8" fill="#17213A" stroke="#F2C14E" stroke-width="2"/>
+        <text class="sans ink" x="84" y="406" font-size="18"><tspan class="gold" font-weight="600">Action:</tspan> ask to restore the 2% cap before the renewal date.</text>
+      </g>
+    </svg>
+
+    <!-- Scene 5 -->
+    <svg class="scene" viewBox="0 0 960 540" role="img" aria-label="Scene 5">
+      <text class="title r" data-s="0" x="60" y="72">Six agents, one hub</text>
+      <g id="s5-lines"></g>
+      <g id="s5-lines-gold"></g>
+      <g class="r" data-s="1">
+        <circle cx="480" cy="270" r="58" fill="#17213A" stroke="#F2C14E" stroke-width="2.5"/>
+        <text class="serif ink" x="480" y="277" text-anchor="middle" font-size="20">Slack hub</text>
+      </g>
+      <circle class="fade" data-s="3" cx="480" cy="270" r="66" fill="none" stroke="#F2C14E" stroke-opacity=".35" stroke-width="6"/>
+      <g id="s5-agents"></g>
+    </svg>
+
+    <!-- Scene 6 -->
+    <svg class="scene" viewBox="0 0 960 540" role="img" aria-label="Scene 6">
+      <text class="title r" data-s="0" x="60" y="72">From personal tool to team asset</text>
+
+      <g class="r" data-s="1">
+        <rect x="60" y="120" width="320" height="210" rx="10" fill="none" stroke="#8A96AD" stroke-width="1.5" stroke-dasharray="6 6"/>
+        <text class="serif ink" x="88" y="166" font-size="25">Personal tool</text>
+        <text class="sans muted" x="88" y="210" font-size="16">One builder</text>
+        <text class="sans muted" x="88" y="246" font-size="16">Informal handoffs</text>
+        <text class="sans muted" x="88" y="282" font-size="16">Single point of failure</text>
+      </g>
+
+      <g class="arrow" data-s="2">
+        <path pathLength="1" d="M400 225 L546 225" stroke="#E9EDF5" stroke-width="2"/>
+        <polygon class="head" points="0,-7 13,0 0,7" transform="translate(546 225)" fill="#E9EDF5"/>
+      </g>
+
+      <g class="r" data-s="3">
+        <rect x="580" y="120" width="320" height="210" rx="10" fill="#17213A" stroke="#56C3A5" stroke-width="2"/>
+        <text class="serif ink" x="608" y="166" font-size="25">Team asset</text>
+        <text class="sans ink" x="608" y="210" font-size="16">Shared data pipeline</text>
+        <text class="sans ink" x="608" y="246" font-size="16">Named owners and backups</text>
+        <text class="sans ink" x="608" y="282" font-size="16">Written runbook</text>
+      </g>
+
+      <text id="ask-text" class="serif gold r" data-s="4" x="60" y="386" font-size="28"></text>
+    </svg>
+
+    <div class="badge">Illustrative data only. Fictional vendor.</div>
+    <div class="caption" id="caption" aria-live="polite"></div>
+  </div>
+
+  <div class="controls" id="controls">
+    <button type="button" id="btn-back">Back</button>
+    <button type="button" id="btn-next">Next</button>
+    <button type="button" id="btn-auto" aria-pressed="false">Auto play</button>
+    <button type="button" id="btn-cap" aria-pressed="true">Captions</button>
+    <button type="button" id="btn-hide" aria-pressed="false">Hide controls</button>
+    <span class="status" id="status" aria-live="polite"></span>
+  </div>
+  <p class="hint">Keys: Right arrow or Space = next. Left arrow = back. A = auto play. C = captions. H = hide or show controls.</p>
+
+  <details class="script" id="script">
+    <summary>Narration script for your voiceover</summary>
+    <div id="script-body"></div>
+  </details>
+</main>
+
+<script>
+(() => {
+  "use strict";
+
+  /* Edit these three values to match your real hub. Everything else updates from them. */
+  const ASK = "[YOUR ASK HERE]";
+  const AGENTS = [
+    { name: "[Agent 1 name]", role: "[Agent 1 role]" },
+    { name: "[Agent 2 name]", role: "[Agent 2 role]" },
+    { name: "[Agent 3 name]", role: "[Agent 3 role]" },
+    { name: "[Agent 4 name]", role: "[Agent 4 role]" },
+    { name: "[Agent 5 name]", role: "[Agent 5 role]" },
+    { name: "[Agent 6 name]", role: "[Agent 6 role]" }
+  ];
+  const AUTO_MS = 3600;
+
+  /* One caption per step. The stage and the narration panel both read this list. */
+  const SCENES = [
+    { label: "Title card", captions: [
+      "From vendor noise to sourcing decisions: the Supplier Intelligence Hub."
+    ]},
+    { label: "Scene 1: Too many vendors, too many places", captions: [
+      "One sourcing portfolio can hold more than 150 vendors.",
+      "Each dot is one vendor.",
+      "Every vendor produces signals. Some need action now.",
+      "The signals live in separate systems.",
+      "No one person can watch all of them."
+    ]},
+    { label: "Scene 2: One flow, two speeds", captions: [
+      "The Supplier Intelligence Hub collects these signals in one flow.",
+      "First, it reads the sources.",
+      "A weekly brief gives the full picture.",
+      "An always-on early warning watches for sudden changes.",
+      "Both send their output to one place."
+    ]},
+    { label: "Scene 3: Every signal gets a posture", captions: [
+      "Each signal gets a posture.",
+      "There are four postures. Each one tells the team what to do next.",
+      "Take Vendor X. It renews in 90 days, and the draft raises the price cap.",
+      "The posture is Increase Leverage. The team uses timing and options."
+    ]},
+    { label: "Scene 4: From signal to dollars", captions: [
+      "Now a worked example. Vendor X is fictional. All numbers are illustrative.",
+      "Vendor X costs 1 million dollars a year.",
+      "The old contract capped the yearly increase at 2 percent. That is at most 20,000 dollars.",
+      "The new draft caps it at 6 percent. That is at most 60,000 dollars.",
+      "The gap is 40,000 dollars of added exposure each year.",
+      "The action: ask to restore the 2 percent cap before the renewal date."
+    ]},
+    { label: "Scene 5: Six agents, one hub", captions: [
+      "Next, how the work happens.",
+      "Everything runs in one Slack hub.",
+      "Six agents work there. Each agent has one job.",
+      "Together they turn signals into briefs, risk checks, deal support, spend views, and waste checks."
+    ]},
+    { label: "Scene 6: From personal tool to team asset", captions: [
+      "One more point. A strong tool should not depend on one person.",
+      "Today the hub is a personal tool.",
+      "The next step is a handoff.",
+      "A team asset has a shared data pipeline, named owners, and a written runbook.",
+      "The ask: " + ASK + "."
+    ]}
+  ];
+
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs, parent) => {
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  };
+  const txt = (attrs, content, parent) => {
+    const n = el("text", attrs, parent);
+    n.textContent = content;
+    return n;
+  };
+
+  /* Scene 1: 15 by 10 grid of vendors, 18 of them flagged. */
+  const grey = document.getElementById("dots-grey");
+  const hot = document.getElementById("dots-hot");
+  const HOT = [3, 17, 22, 38, 41, 56, 63, 77, 84, 92, 99, 108, 115, 121, 129, 136, 142, 147];
+  for (let i = 0; i < 150; i++) {
+    const cx = 90 + (i % 15) * 28;
+    const cy = 135 + Math.floor(i / 15) * 28;
+    el("circle", { cx, cy, r: 6, fill: "#3A4664", class: "fade", "data-s": 1, style: "--d:" + (i * 0.005).toFixed(3) + "s" }, grey);
+    const k = HOT.indexOf(i);
+    if (k >= 0) {
+      el("circle", { cx, cy, r: 6, fill: k % 3 === 0 ? "#EF7A63" : "#F2C14E", class: "fade", "data-s": 2, style: "--d:" + (k * 0.05).toFixed(2) + "s" }, hot);
+    }
+  }
+
+  /* Source chips, shared by scenes 1 and 2. */
+  const SOURCES = ["Contracts", "Renewal dates", "Security reviews", "Usage data", "Market news"];
+  const chips = (parent, x, w, step) => {
+    SOURCES.forEach((s, i) => {
+      const g = el("g", { class: "r", "data-s": step, style: "--d:" + (i * 0.12).toFixed(2) + "s" }, parent);
+      const y = 130 + i * 54;
+      el("rect", { x, y, width: w, height: 40, rx: 8, fill: "#17213A", stroke: "#2A3550" }, g);
+      txt({ x: x + 18, y: y + 26, class: "sans ink", "font-size": 15 }, s, g);
+    });
+  };
+  chips(document.getElementById("s1-chips"), 600, 240, 3);
+  chips(document.getElementById("s2-chips"), 60, 170, 1);
+
+  /* Scene 5: six agents on an ellipse around the hub. */
+  const lines = document.getElementById("s5-lines");
+  const linesGold = document.getElementById("s5-lines-gold");
+  const agents = document.getElementById("s5-agents");
+  AGENTS.forEach((a, k) => {
+    const t = (-90 + 60 * k) * Math.PI / 180;
+    const x = 480 + 300 * Math.cos(t);
+    const y = 270 + 140 * Math.sin(t);
+    const dx = x - 480, dy = y - 270, len = Math.hypot(dx, dy);
+    const x0 = 480 + dx / len * 60, y0 = 270 + dy / len * 60;
+    const d = "M" + x0.toFixed(1) + " " + y0.toFixed(1) + " L" + x.toFixed(1) + " " + y.toFixed(1);
+    const delay = "--d:" + (k * 0.25).toFixed(2) + "s";
+    const lg = el("g", { class: "arrow", "data-s": 2, style: delay }, lines);
+    el("path", { d, pathLength: 1, stroke: "#2A3550", "stroke-width": 2 }, lg);
+    el("path", { d, class: "fade", "data-s": 3, style: delay, stroke: "#F2C14E", "stroke-opacity": .7, "stroke-width": 2, fill: "none" }, linesGold);
+    const g = el("g", { class: "r", "data-s": 2, style: "--d:" + (k * 0.25 + 0.35).toFixed(2) + "s" }, agents);
+    el("rect", { x: x - 95, y: y - 30, width: 190, height: 60, rx: 12, fill: "#17213A", stroke: "#2A3550" }, g);
+    txt({ x, y: y - 4, "text-anchor": "middle", class: "sans ink", "font-size": 15, "font-weight": 600 }, a.name, g);
+    txt({ x, y: y + 17, "text-anchor": "middle", class: "sans muted", "font-size": 12.5 }, a.role, g);
+  });
+
+  /* Scene 6: the ask, wrapped onto at most two lines. */
+  (() => {
+    const t = document.getElementById("ask-text");
+    const words = ("The ask: " + ASK + ".").split(" ");
+    const out = [""];
+    for (const w of words) {
+      const cur = out[out.length - 1];
+      if (cur && (cur + " " + w).length > 52) out.push(w);
+      else out[out.length - 1] = cur ? cur + " " + w : w;
+    }
+    out.forEach((line, i) => {
+      const s = el("tspan", { x: 60, dy: i ? 36 : 0 }, t);
+      s.textContent = line;
+    });
+  })();
+
+  /* Narration panel, built from the same caption data. */
+  (() => {
+    const body = document.getElementById("script-body");
+    const note = document.createElement("p");
+    note.className = "note";
+    note.textContent = "One line per step. Fictional vendor. Illustrative numbers only.";
+    body.appendChild(note);
+    SCENES.forEach(s => {
+      const h = document.createElement("h3");
+      h.textContent = s.label;
+      const ol = document.createElement("ol");
+      s.captions.forEach(c => {
+        const li = document.createElement("li");
+        li.textContent = c;
+        ol.appendChild(li);
+      });
+      body.append(h, ol);
+    });
+  })();
+
+  /* Controller */
+  const sceneEls = Array.from(document.querySelectorAll(".scene"));
+  const caption = document.getElementById("caption");
+  const status = document.getElementById("status");
+  const controls = document.getElementById("controls");
+  const btnAuto = document.getElementById("btn-auto");
+  const btnCap = document.getElementById("btn-cap");
+  const btnHide = document.getElementById("btn-hide");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  let scene = 0, step = 0, timer = null, capTimer = null;
+
+  const applyStep = (svg, n) => {
+    svg.querySelectorAll("[data-s]").forEach(node => {
+      const s = +node.dataset.s;
+      const hide = node.dataset.hide !== undefined ? +node.dataset.hide : Infinity;
+      node.classList.toggle("on", n >= s && n < hide);
+    });
+    svg.querySelectorAll("[data-move]").forEach(node => {
+      node.classList.toggle("moved", n >= +node.dataset.move);
+    });
+  };
+
+  const setCaption = text => {
+    clearTimeout(capTimer);
+    if (caption.textContent === text) return;
+    if (reduce.matches) { caption.textContent = text; return; }
+    caption.classList.add("swap");
+    capTimer = setTimeout(() => {
+      caption.textContent = text;
+      caption.classList.remove("swap");
+    }, 180);
+  };
+
+  const render = () => {
+    applyStep(sceneEls[scene], step);
+    setCaption(SCENES[scene].captions[step]);
+    const n = SCENES[scene].captions.length;
+    status.textContent = (scene === 0 ? "Title card" : "Scene " + scene + " of " + (SCENES.length - 1)) +
+      ", step " + (step + 1) + " of " + n;
+  };
+
+  /* Enter a scene. Forward entry resets it, then plays step 0. Backward entry shows the last step at once. */
+  const enter = (idx, backward) => {
+    const svg = sceneEls[idx];
+    svg.classList.add("instant");
+    applyStep(svg, backward ? SCENES[idx].captions.length - 1 : -1);
+    void svg.getBoundingClientRect();
+    svg.classList.remove("instant");
+    sceneEls.forEach((s, i) => s.classList.toggle("active", i === idx));
+    scene = idx;
+    step = backward ? SCENES[idx].captions.length - 1 : 0;
+    requestAnimationFrame(() => requestAnimationFrame(render));
+  };
+
+  const atEnd = () => scene === SCENES.length - 1 && step === SCENES[scene].captions.length - 1;
+
+  const next = () => {
+    if (step < SCENES[scene].captions.length - 1) { step++; render(); return true; }
+    if (scene < SCENES.length - 1) { enter(scene + 1, false); return true; }
+    return false;
+  };
+  const back = () => {
+    if (step > 0) { step--; render(); return; }
+    if (scene > 0) enter(scene - 1, true);
+  };
+
+  const stopAuto = () => {
+    clearInterval(timer);
+    timer = null;
+    btnAuto.setAttribute("aria-pressed", "false");
+  };
+  const toggleAuto = () => {
+    if (timer) { stopAuto(); return; }
+    if (atEnd()) enter(0, false);
+    btnAuto.setAttribute("aria-pressed", "true");
+    timer = setInterval(() => {
+      if (!next() || atEnd()) stopAuto();
+    }, AUTO_MS);
+  };
+  const toggleCaptions = () => {
+    const on = caption.classList.toggle("off") === false;
+    btnCap.setAttribute("aria-pressed", String(on));
+  };
+  const toggleControls = () => {
+    const hidden = controls.classList.toggle("hidden");
+    btnHide.setAttribute("aria-pressed", String(hidden));
+    btnHide.textContent = hidden ? "Show controls" : "Hide controls";
+  };
+
+  document.getElementById("btn-next").addEventListener("click", () => { stopAuto(); next(); });
+  document.getElementById("btn-back").addEventListener("click", () => { stopAuto(); back(); });
+  btnAuto.addEventListener("click", toggleAuto);
+  btnCap.addEventListener("click", toggleCaptions);
+  btnHide.addEventListener("click", e => {
+    toggleControls();
+    /* A mouse click should not keep the hidden bar visible through focus. */
+    if (e.detail > 0) btnHide.blur();
+  });
+
+  document.addEventListener("keydown", e => {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    const t = e.target;
+    const native = t && (t.tagName === "BUTTON" || t.tagName === "SUMMARY");
+    const k = e.key;
+    if (k === "ArrowRight" || (k === " " && !native)) { e.preventDefault(); stopAuto(); next(); }
+    else if (k === "ArrowLeft") { e.preventDefault(); stopAuto(); back(); }
+    else if (k === "a" || k === "A") toggleAuto();
+    else if (k === "c" || k === "C") toggleCaptions();
+    else if (k === "h" || k === "H") toggleControls();
+  });
+
+  /* Expose read-only data for the export and test scripts. */
+  window.EXPLAINER = { SCENES, AUTO_MS, state: () => ({ scene, step }) };
+
+  enter(0, false);
+})();
+</script>
+</body>
+</html>
