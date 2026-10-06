@@ -418,7 +418,8 @@
     { name: "[Agent 5 name]", role: "[Agent 5 role]" },
     { name: "[Agent 6 name]", role: "[Agent 6 role]" }
   ];
-  const AUTO_MS = 3600;
+  /* Auto play holds each step for as long as its line takes to say (about 156 words per minute). */
+  const WPS = 2.6, PAD = 0.5, MIN_S = 2.6;
 
   /* One caption per step. The stage and the narration panel both read this list. */
   const SCENES = [
@@ -467,6 +468,11 @@
       "The ask: " + ASK + "."
     ]}
   ];
+
+  /* Spoken length of a line. A number counts as two words ("20,000" is "twenty thousand"). */
+  const spoken = c => c.split(/\s+/).reduce((n, w) => n + (/\d/.test(w) ? 2 : 1), 0);
+  const DURATIONS = SCENES.map(s => s.captions.map(c =>
+    Math.max(MIN_S, Math.round((spoken(c) / WPS + PAD) * 10) / 10)));
 
   const NS = "http://www.w3.org/2000/svg";
   const el = (tag, attrs, parent) => {
@@ -633,7 +639,7 @@
   };
 
   const stopAuto = () => {
-    clearInterval(timer);
+    clearTimeout(timer);
     timer = null;
     btnAuto.setAttribute("aria-pressed", "false");
   };
@@ -641,9 +647,14 @@
     if (timer) { stopAuto(); return; }
     if (atEnd()) enter(0, false);
     btnAuto.setAttribute("aria-pressed", "true");
-    timer = setInterval(() => {
-      if (!next() || atEnd()) stopAuto();
-    }, AUTO_MS);
+    const tick = () => {
+      timer = setTimeout(() => {
+        if (!next()) { stopAuto(); return; }
+        if (atEnd()) { timer = null; btnAuto.setAttribute("aria-pressed", "false"); return; }
+        tick();
+      }, DURATIONS[scene][step] * 1000);
+    };
+    tick();
   };
   const toggleCaptions = () => {
     const on = caption.classList.toggle("off") === false;
@@ -678,7 +689,7 @@
   });
 
   /* Expose read-only data for the export and test scripts. */
-  window.EXPLAINER = { SCENES, AUTO_MS, state: () => ({ scene, step }) };
+  window.EXPLAINER = { SCENES, DURATIONS, state: () => ({ scene, step }) };
 
   enter(0, false);
 })();

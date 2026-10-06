@@ -1,120 +1,119 @@
 1
-00:00:00,000 --> 00:00:03,500
+00:00:00,000 --> 00:00:04,200
 From vendor noise to sourcing decisions: the Supplier Intelligence Hub.
 
 2
-00:00:03,600 --> 00:00:07,100
+00:00:04,300 --> 00:00:08,500
 One sourcing portfolio can hold more than 150 vendors.
 
 3
-00:00:07,200 --> 00:00:10,700
+00:00:08,600 --> 00:00:11,100
 Each dot is one vendor.
 
 4
-00:00:10,800 --> 00:00:14,300
+00:00:11,200 --> 00:00:14,700
 Every vendor produces signals. Some need action now.
 
 5
-00:00:14,400 --> 00:00:17,900
+00:00:14,800 --> 00:00:17,500
 The signals live in separate systems.
 
 6
-00:00:18,000 --> 00:00:21,500
+00:00:17,600 --> 00:00:21,100
 No one person can watch all of them.
 
 7
-00:00:21,600 --> 00:00:25,100
+00:00:21,200 --> 00:00:25,400
 The Supplier Intelligence Hub collects these signals in one flow.
 
 8
-00:00:25,200 --> 00:00:28,700
+00:00:25,500 --> 00:00:28,000
 First, it reads the sources.
 
 9
-00:00:28,800 --> 00:00:32,300
+00:00:28,100 --> 00:00:31,200
 A weekly brief gives the full picture.
 
 10
-00:00:32,400 --> 00:00:35,900
+00:00:31,300 --> 00:00:34,800
 An always-on early warning watches for sudden changes.
 
 11
-00:00:36,000 --> 00:00:39,500
+00:00:34,900 --> 00:00:38,000
 Both send their output to one place.
 
 12
-00:00:39,600 --> 00:00:43,100
+00:00:38,100 --> 00:00:40,600
 Each signal gets a posture.
 
 13
-00:00:43,200 --> 00:00:46,700
+00:00:40,700 --> 00:00:46,100
 There are four postures. Each one tells the team what to do next.
 
 14
-00:00:46,800 --> 00:00:50,300
+00:00:46,200 --> 00:00:52,800
 Take Vendor X. It renews in 90 days, and the draft raises the price cap.
 
 15
-00:00:50,400 --> 00:00:53,900
+00:00:52,900 --> 00:00:57,500
 The posture is Increase Leverage. The team uses timing and options.
 
 16
-00:00:54,000 --> 00:00:57,500
+00:00:57,600 --> 00:01:02,600
 Now a worked example. Vendor X is fictional. All numbers are illustrative.
 
 17
-00:00:57,600 --> 00:01:01,100
+00:01:02,700 --> 00:01:06,600
 Vendor X costs 1 million dollars a year.
 
 18
-00:01:01,200 --> 00:01:04,700
+00:01:06,700 --> 00:01:14,000
 The old contract capped the yearly increase at 2 percent. That is at most 20,000 dollars.
 
 19
-00:01:04,800 --> 00:01:08,300
+00:01:14,100 --> 00:01:20,700
 The new draft caps it at 6 percent. That is at most 60,000 dollars.
 
 20
-00:01:08,400 --> 00:01:11,900
+00:01:20,800 --> 00:01:25,400
 The gap is 40,000 dollars of added exposure each year.
 
 21
-00:01:12,000 --> 00:01:15,500
+00:01:25,500 --> 00:01:31,300
 The action: ask to restore the 2 percent cap before the renewal date.
 
 22
-00:01:15,600 --> 00:01:19,100
+00:01:31,400 --> 00:01:33,900
 Next, how the work happens.
 
 23
-00:01:19,200 --> 00:01:22,700
+00:01:34,000 --> 00:01:36,700
 Everything runs in one Slack hub.
 
 24
-00:01:22,800 --> 00:01:26,300
+00:01:36,800 --> 00:01:40,700
 Six agents work there. Each agent has one job.
 
 25
-00:01:26,400 --> 00:01:29,900
+00:01:40,800 --> 00:01:47,000
 Together they turn signals into briefs, risk checks, deal support, spend views, and waste checks.
 
 26
-00:01:30,000 --> 00:01:33,500
+00:01:47,100 --> 00:01:52,100
 One more point. A strong tool should not depend on one person.
 
 27
-00:01:33,600 --> 00:01:37,100
+00:01:52,200 --> 00:01:55,300
 Today the hub is a personal tool.
 
 28
-00:01:37,200 --> 00:01:40,700
+00:01:55,400 --> 00:01:58,100
 The next step is a handoff.
 
 29
-00:01:40,800 --> 00:01:44,300
+00:01:58,200 --> 00:02:04,000
 A team asset has a shared data pipeline, named owners, and a written runbook.
 
 30
-00:01:44,400 --> 00:01:47,900
+00:02:04,100 --> 00:02:06,600
 The ask: [YOUR ASK HERE].
-

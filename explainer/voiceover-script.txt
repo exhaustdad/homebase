@@ -1,0 +1,35 @@
+Voiceover script. Start speaking when you press A on the title card.
+Read each line when its time comes. Times are minutes:seconds.
+
+[0:00.0]  From vendor noise to sourcing decisions: the Supplier Intelligence Hub.
+[0:04.3]  One sourcing portfolio can hold more than 150 vendors.
+[0:08.6]  Each dot is one vendor.
+[0:11.2]  Every vendor produces signals. Some need action now.
+[0:14.8]  The signals live in separate systems.
+[0:17.6]  No one person can watch all of them.
+[0:21.2]  The Supplier Intelligence Hub collects these signals in one flow.
+[0:25.5]  First, it reads the sources.
+[0:28.1]  A weekly brief gives the full picture.
+[0:31.3]  An always-on early warning watches for sudden changes.
+[0:34.9]  Both send their output to one place.
+[0:38.1]  Each signal gets a posture.
+[0:40.7]  There are four postures. Each one tells the team what to do next.
+[0:46.2]  Take Vendor X. It renews in 90 days, and the draft raises the price cap.
+[0:52.9]  The posture is Increase Leverage. The team uses timing and options.
+[0:57.6]  Now a worked example. Vendor X is fictional. All numbers are illustrative.
+[1:02.7]  Vendor X costs 1 million dollars a year.
+[1:06.7]  The old contract capped the yearly increase at 2 percent. That is at most 20,000 dollars.
+[1:14.1]  The new draft caps it at 6 percent. That is at most 60,000 dollars.
+[1:20.8]  The gap is 40,000 dollars of added exposure each year.
+[1:25.5]  The action: ask to restore the 2 percent cap before the renewal date.
+[1:31.4]  Next, how the work happens.
+[1:34.0]  Everything runs in one Slack hub.
+[1:36.8]  Six agents work there. Each agent has one job.
+[1:40.8]  Together they turn signals into briefs, risk checks, deal support, spend views, and waste checks.
+[1:47.1]  One more point. A strong tool should not depend on one person.
+[1:52.2]  Today the hub is a personal tool.
+[1:55.4]  The next step is a handoff.
+[1:58.2]  A team asset has a shared data pipeline, named owners, and a written runbook.
+[2:04.1]  The ask: [YOUR ASK HERE].
+
+[2:06.7]  End.
