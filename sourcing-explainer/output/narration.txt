@@ -2,22 +2,31 @@ Scene 0, title card
 From vendor noise to sourcing decisions: the Supplier Intelligence Hub.
 
 Scene 1, Too many vendors, too many places
-One sourcing portfolio can hold more than 150 vendors. Each dot is one vendor. Every vendor produces signals. Some need action now. The signals live in separate systems. No one person can watch all of them.
+One sourcing portfolio can hold more than 150 vendors. Each dot is one vendor. Some need action now. But the signals live in separate systems. No one can watch them all.
 
 Scene 2, One flow, two speeds
-The Supplier Intelligence Hub collects these signals in one flow. First, it reads the sources. A weekly brief gives the full picture. An always-on early warning watches for sudden changes. Both send their output to one place.
+The Supplier Intelligence Hub pulls these signals into one flow. A weekly brief gives the full picture. An always-on early warning catches sudden changes. Both land in one place.
 
 Scene 3, Every signal gets a posture
-Each signal gets a posture. There are four postures. Each one tells the team what to do next. Take Vendor X. It renews in 90 days, and the draft raises the price cap. The posture is Increase Leverage. The team uses timing and options.
+Every signal gets a posture, and each posture tells the team what to do next. Take Vendor X. It renews in 90 days, and the draft raises the price cap. The posture: Increase Leverage. Use timing and options.
 
 Scene 4, From signal to dollars
 Part 1:
-Now a worked example. Vendor X is fictional. All numbers are illustrative. Vendor X costs 1 million dollars a year. The old contract capped the yearly increase at 2 percent. That is at most 20,000 dollars. The new draft caps it at 6 percent. That is at most 60,000 dollars.
+Here is what that is worth. Vendor X is fictional, and all numbers are illustrative. Vendor X costs 1 million dollars a year. The old cap on yearly increases was 2 percent: at most 20,000 dollars. The draft cap is 6 percent: at most 60,000 dollars.
 Part 2:
-The gap is 40,000 dollars of added exposure each year. The action: ask to restore the 2 percent cap before the renewal date.
+That is 40,000 dollars of added exposure every year. The move: restore the 2 percent cap before renewal.
 
-Scene 5, Six agents, one hub
-Next, how the work happens. Everything runs in one Slack hub. Six agents work there. Each agent has one job. Together they turn signals into briefs, risk checks, deal support, spend views, and waste checks.
+Scene 5, Speed is revenue
+Savings are only half the story. Speed is revenue. A product team needs Vendor Y, a fictional data partner, to launch. A typical sourcing cycle takes 12 weeks. With reviews and a shortlist already in the hub, it takes 4 weeks. The launch ships 8 weeks earlier. That is 8 more weeks of revenue.
 
-Scene 6, From reacting to seeing ahead
-Today the hub tells us what happened. Next, it tells us what is coming. We see the renewal, the risk, and the price change before they arrive. Early sight gives us time to act. Early action drives the business.
+Scene 6, Looking around the corner
+Now look around the corner. Vendor Z, also fictional, supports ad delivery. Usage is at 85 percent of capacity. The vendor was just acquired. Peak season is 120 days out. Each signal alone is noise. Together, they say act now. The team locks in capacity and a backup before the peak. Peak revenue is protected.
+
+Scene 7, Six agents, one hub
+Behind it, six agents work in one Slack hub. Each has one job: briefs, risk checks, deal support, spend views, and waste checks.
+
+Scene 8, Three levers, one hub
+Three levers, one hub. Protect margin: 40,000 dollars a year. Speed growth: launches 8 weeks sooner. Protect revenue: 120 days of warning.
+
+Scene 9, From reacting to seeing ahead
+Today the hub tells us what happened. Next, it tells us what is coming: the renewal, the risk, and the opportunity, before they arrive. Early sight buys time to act. Early action drives the business.

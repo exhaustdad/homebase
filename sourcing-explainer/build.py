@@ -25,18 +25,13 @@ CLASSES = {
     "02_flow": "S02Flow",
     "03_posture": "S03Posture",
     "04_dollars": "S04Dollars",
-    "05_agents": "S05Agents",
-    "06_ahead": "S06Ahead",
+    "05_speed": "S05Speed",
+    "06_corner": "S06Corner",
+    "07_agents": "S07Agents",
+    "08_levers": "S08Levers",
+    "09_ahead": "S09Ahead",
 }
-SCENE_LABELS = {
-    "00_title": "Scene 0, title card",
-    "01_vendors": "Scene 1, Too many vendors, too many places",
-    "02_flow": "Scene 2, One flow, two speeds",
-    "03_posture": "Scene 3, Every signal gets a posture",
-    "04_dollars": "Scene 4, From signal to dollars",
-    "05_agents": "Scene 5, Six agents, one hub",
-    "06_ahead": "Scene 6, From reacting to seeing ahead",
-}
+SCENE_LABELS = {k: f"Scene {int(k[:2])}, " + (C.SCENE_TITLES[k] or "title card") for k in CLASSES}
 ENC = ["-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "16", "-preset", "medium", "-an"]
 
 

@@ -31,6 +31,9 @@ PADDING_SECONDS = 1.0
 CROSSFADE_SECONDS = 0.5
 FPS_FINAL = 30
 
+# Vendor Z's role. Swap for another business (for example "payments" or "search").
+VENDOR_Z_ROLE = "ad delivery"
+
 # Narration. Each scene is a list of parts; each part is a list of sentences.
 # Only Scene 4 has two parts.
 NARRATION = {
@@ -40,55 +43,70 @@ NARRATION = {
     "01_vendors": [[
         "One sourcing portfolio can hold more than 150 vendors.",
         "Each dot is one vendor.",
-        "Every vendor produces signals.",
         "Some need action now.",
-        "The signals live in separate systems.",
-        "No one person can watch all of them.",
+        "But the signals live in separate systems.",
+        "No one can watch them all.",
     ]],
     "02_flow": [[
-        "The Supplier Intelligence Hub collects these signals in one flow.",
-        "First, it reads the sources.",
+        "The Supplier Intelligence Hub pulls these signals into one flow.",
         "A weekly brief gives the full picture.",
-        "An always-on early warning watches for sudden changes.",
-        "Both send their output to one place.",
+        "An always-on early warning catches sudden changes.",
+        "Both land in one place.",
     ]],
     "03_posture": [[
-        "Each signal gets a posture.",
-        "There are four postures.",
-        "Each one tells the team what to do next.",
+        "Every signal gets a posture, and each posture tells the team what to do next.",
         "Take Vendor X.",
         "It renews in 90 days, and the draft raises the price cap.",
-        "The posture is Increase Leverage.",
-        "The team uses timing and options.",
+        "The posture: Increase Leverage.",
+        "Use timing and options.",
     ]],
     "04_dollars": [
         [
-            "Now a worked example.",
-            "Vendor X is fictional.",
-            "All numbers are illustrative.",
+            "Here is what that is worth.",
+            "Vendor X is fictional, and all numbers are illustrative.",
             "Vendor X costs 1 million dollars a year.",
-            "The old contract capped the yearly increase at 2 percent.",
-            "That is at most 20,000 dollars.",
-            "The new draft caps it at 6 percent.",
-            "That is at most 60,000 dollars.",
+            "The old cap on yearly increases was 2 percent: at most 20,000 dollars.",
+            "The draft cap is 6 percent: at most 60,000 dollars.",
         ],
         [
-            "The gap is 40,000 dollars of added exposure each year.",
-            "The action: ask to restore the 2 percent cap before the renewal date.",
+            "That is 40,000 dollars of added exposure every year.",
+            "The move: restore the 2 percent cap before renewal.",
         ],
     ],
-    "05_agents": [[
-        "Next, how the work happens.",
-        "Everything runs in one Slack hub.",
-        "Six agents work there.",
-        "Each agent has one job.",
-        "Together they turn signals into briefs, risk checks, deal support, spend views, and waste checks.",
+    "05_speed": [[
+        "Savings are only half the story.",
+        "Speed is revenue.",
+        "A product team needs Vendor Y, a fictional data partner, to launch.",
+        "A typical sourcing cycle takes 12 weeks.",
+        "With reviews and a shortlist already in the hub, it takes 4 weeks.",
+        "The launch ships 8 weeks earlier.",
+        "That is 8 more weeks of revenue.",
     ]],
-    "06_ahead": [[
+    "06_corner": [[
+        "Now look around the corner.",
+        f"Vendor Z, also fictional, supports {VENDOR_Z_ROLE}.",
+        "Usage is at 85 percent of capacity.",
+        "The vendor was just acquired.",
+        "Peak season is 120 days out.",
+        "Each signal alone is noise.",
+        "Together, they say act now.",
+        "The team locks in capacity and a backup before the peak.",
+        "Peak revenue is protected.",
+    ]],
+    "07_agents": [[
+        "Behind it, six agents work in one Slack hub.",
+        "Each has one job: briefs, risk checks, deal support, spend views, and waste checks.",
+    ]],
+    "08_levers": [[
+        "Three levers, one hub.",
+        "Protect margin: 40,000 dollars a year.",
+        "Speed growth: launches 8 weeks sooner.",
+        "Protect revenue: 120 days of warning.",
+    ]],
+    "09_ahead": [[
         "Today the hub tells us what happened.",
-        "Next, it tells us what is coming.",
-        "We see the renewal, the risk, and the price change before they arrive.",
-        "Early sight gives us time to act.",
+        "Next, it tells us what is coming: the renewal, the risk, and the opportunity, before they arrive.",
+        "Early sight buys time to act.",
         "Early action drives the business.",
     ]],
 }
@@ -100,8 +118,11 @@ SCENE_TITLES = {
     "02_flow": "One flow, two speeds",
     "03_posture": "Every signal gets a posture",
     "04_dollars": "From signal to dollars",
-    "05_agents": "Six agents, one hub",
-    "06_ahead": "From reacting to seeing ahead",
+    "05_speed": "Speed is revenue",
+    "06_corner": "Looking around the corner",
+    "07_agents": "Six agents, one hub",
+    "08_levers": "Three levers, one hub",
+    "09_ahead": "From reacting to seeing ahead",
 }
 
 
@@ -201,4 +222,25 @@ assert f"{round(OLD_CAP * 100)} percent" in _n4
 assert f"{round(NEW_CAP * 100)} percent" in _n4
 assert f"{SPEND // 1000000} million dollars" in _n4
 assert f"more than {VENDOR_COUNT} vendors" in NARRATION["01_vendors"][0][0]
-assert f"{RENEWAL_DAYS} days" in NARRATION["03_posture"][0][4]
+assert f"{RENEWAL_DAYS} days" in NARRATION["03_posture"][0][2]
+
+# Scene 5 data (weeks only, no revenue figure)
+TYPICAL_WEEKS = 12
+HUB_WEEKS = 4
+WEEKS_SAVED = TYPICAL_WEEKS - HUB_WEEKS
+assert WEEKS_SAVED == 8
+_n5 = " ".join(NARRATION["05_speed"][0])
+assert f"takes {TYPICAL_WEEKS} weeks" in _n5 and f"takes {HUB_WEEKS} weeks" in _n5
+assert f"{WEEKS_SAVED} weeks earlier" in _n5 and f"{WEEKS_SAVED} more weeks" in _n5
+
+# Scene 6 data
+USAGE = 0.85
+DAYS_TO_PEAK = 120
+_n6 = " ".join(NARRATION["06_corner"][0])
+assert f"{round(USAGE * 100)} percent" in _n6 and f"{DAYS_TO_PEAK} days" in _n6
+
+# Scene 8 pulls its numbers from Scenes 4 to 6
+_n8 = " ".join(NARRATION["08_levers"][0])
+assert f"{int(gap):,} dollars" in _n8
+assert f"{WEEKS_SAVED} weeks" in _n8
+assert f"{DAYS_TO_PEAK} days" in _n8
