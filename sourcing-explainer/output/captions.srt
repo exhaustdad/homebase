@@ -1,0 +1,155 @@
+1
+00:00:00,500 --> 00:00:04,500
+From vendor noise to sourcing decisions: the Supplier Intelligence Hub.
+
+2
+00:00:05,000 --> 00:00:08,600
+One sourcing portfolio can hold more than 150 vendors.
+
+3
+00:00:08,600 --> 00:00:10,600
+Each dot is one vendor.
+
+4
+00:00:10,600 --> 00:00:12,200
+Every vendor produces signals.
+
+5
+00:00:12,200 --> 00:00:13,800
+Some need action now.
+
+6
+00:00:13,800 --> 00:00:16,200
+The signals live in separate systems.
+
+7
+00:00:16,200 --> 00:00:19,400
+No one person can watch all of them.
+
+8
+00:00:19,900 --> 00:00:23,900
+The Supplier Intelligence Hub collects these signals in one flow.
+
+9
+00:00:23,900 --> 00:00:25,900
+First, it reads the sources.
+
+10
+00:00:25,900 --> 00:00:28,700
+A weekly brief gives the full picture.
+
+11
+00:00:28,700 --> 00:00:31,900
+An always-on early warning watches for sudden changes.
+
+12
+00:00:31,900 --> 00:00:34,700
+Both send their output to one place.
+
+13
+00:00:35,200 --> 00:00:37,200
+Each signal gets a posture.
+
+14
+00:00:37,200 --> 00:00:38,800
+There are four postures.
+
+15
+00:00:38,800 --> 00:00:42,400
+Each one tells the team what to do next.
+
+16
+00:00:42,400 --> 00:00:43,600
+Take Vendor X.
+
+17
+00:00:43,600 --> 00:00:48,400
+It renews in 90 days, and the draft raises the price cap.
+
+18
+00:00:48,400 --> 00:00:50,400
+The posture is Increase Leverage.
+
+19
+00:00:50,400 --> 00:00:52,800
+The team uses timing and options.
+
+20
+00:00:53,300 --> 00:00:54,900
+Now a worked example.
+
+21
+00:00:54,900 --> 00:00:56,500
+Vendor X is fictional.
+
+22
+00:00:56,500 --> 00:00:58,100
+All numbers are illustrative.
+
+23
+00:00:58,100 --> 00:01:01,300
+Vendor X costs 1 million dollars a year.
+
+24
+00:01:01,300 --> 00:01:05,300
+The old contract capped the yearly increase at 2 percent.
+
+25
+00:01:05,300 --> 00:01:07,700
+That is at most 20,000 dollars.
+
+26
+00:01:07,700 --> 00:01:10,900
+The new draft caps it at 6 percent.
+
+27
+00:01:10,900 --> 00:01:13,300
+That is at most 60,000 dollars.
+
+28
+00:01:14,300 --> 00:01:18,300
+The gap is 40,000 dollars of added exposure each year.
+
+29
+00:01:18,300 --> 00:01:23,500
+The action: ask to restore the 2 percent cap before the renewal date.
+
+30
+00:01:24,000 --> 00:01:26,000
+Next, how the work happens.
+
+31
+00:01:26,000 --> 00:01:28,400
+Everything runs in one Slack hub.
+
+32
+00:01:28,400 --> 00:01:30,000
+Six agents work there.
+
+33
+00:01:30,000 --> 00:01:32,000
+Each agent has one job.
+
+34
+00:01:32,000 --> 00:01:38,000
+Together they turn signals into briefs, risk checks, deal support, spend views, and waste checks.
+
+35
+00:01:38,500 --> 00:01:41,300
+Today the hub tells us what happened.
+
+36
+00:01:41,300 --> 00:01:44,100
+Next, it tells us what is coming.
+
+37
+00:01:44,100 --> 00:01:49,300
+We see the renewal, the risk, and the price change before they arrive.
+
+38
+00:01:49,300 --> 00:01:52,100
+Early sight gives us time to act.
+
+39
+00:01:52,100 --> 00:01:54,100
+Early action drives the business.
