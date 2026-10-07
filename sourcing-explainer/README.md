@@ -1,7 +1,8 @@
 # Sourcing explainer video
 
-A silent, 3Blue1Brown-style explainer of the Supplier Intelligence Hub, built with
-Manim Community Edition. All data is synthetic and the vendor ("Vendor X") is fictional.
+A silent, one-minute, 3Blue1Brown-style explainer of the Supplier Intelligence Hub,
+built with Manim Community Edition. It is aimed at CFO-org leadership and leads with
+business value: what a single missed renewal term costs, and what early sight buys. All data is synthetic and the vendor ("Vendor X") is fictional.
 Every scene carries the badge "Illustrative data only. Fictional vendor."
 
 ## Files
@@ -9,8 +10,8 @@ Every scene carries the badge "Illustrative data only. Fictional vendor."
 | File | What it holds |
 | --- | --- |
 | `config.py` | Palette, fonts, narration (one Python list per scene), timing rule, and every number shown on screen, with asserts |
-| `scenes.py` | The seven Manim scenes and the shared base class (badge, title, narration-locked timing) |
-| `build.py` | Renders the scenes, splits scene 4, joins everything with cross-fades, writes captions and narration, saves stills |
+| `scenes.py` | The five Manim scenes and the shared base class (badge, title, narration-locked timing) |
+| `build.py` | Renders the scenes, exports one file per narration part where a scene has several, joins everything with cross-fades, writes captions and narration, saves stills |
 | `output/` | Final MP4s, `explainer_combined.mp4`, `narration.txt`, `captions.srt`, and `stills/` |
 
 ## Requirements
@@ -31,7 +32,7 @@ Every scene carries the badge "Illustrative data only. Fictional vendor."
 cd sourcing-explainer
 python build.py --preview          # fast 480p, 15 fps pass into output/preview
 python build.py                    # final 1920x1080, 30 fps pass into output
-python build.py --only 04_dollars  # re-render one scene, then rebuild the joined files
+python build.py --only 03_dollars  # re-render one scene, then rebuild the joined files
 ```
 
 `build.py` stops before rendering if any assert in `config.py` fails. It prints the
@@ -45,7 +46,7 @@ To render a single scene by hand: `manim -qh scenes.py DollarsScene`.
   part is a list of sentences. Scene length, animation cue times, captions and
   `narration.txt` all follow from this, so nothing else needs to change.
 * **Numbers**: change the variables in `config.py` (for example `SPEND`, `OLD_CAP`,
-  `NEW_CAP`, `RENEWAL_DAYS`). Then update the asserts in `assert_data()`, which check
+  `NEW_CAP`, `RENEWAL_DAYS`, `FLAGGED`). Then update the asserts in `assert_data()`, which check
   both the math and that the narration speaks the same numbers.
 * **On-screen labels**: titles and box labels live in `scenes.py` (titles as `TITLE`
   on each scene class) and in the lists in `config.py` (`SOURCES`, `POSTURES`, `AGENTS`).
@@ -61,16 +62,15 @@ the start of a narration sentence (`self.at(i)` in `scenes.py`).
 
 | Scene | File | Seconds |
 | --- | --- | --- |
-| 0 Title | `00_title.mp4` | 5.0 |
-| 1 Too many vendors | `01_vendors.mp4` | 15.4 |
-| 2 One flow, two speeds | `02_flow.mp4` | 15.8 |
-| 3 Every signal gets a posture | `03_posture.mp4` | 18.6 |
-| 4 From signal to dollars | `04_dollars.mp4` (halves `04a`, `04b`: 21.0 and 10.2) | 31.2 |
-| 5 Six agents, one hub | `05_agents.mp4` | 15.0 |
-| 6 From reacting to seeing ahead | `06_ahead.mp4` | 16.6 |
+| 0 Title | `00_title.mp4` | 3.4 |
+| 1 Too many vendors, too many places | `01_problem.mp4` | 9.4 |
+| 2 One flow, four postures | `02_flow.mp4` | 13.8 |
+| 3 From signal to dollars | `03_dollars.mp4` | 18.2 |
+| 4 Early sight, better terms | `04_action.mp4` | 17.0 |
 
-Scenes total 117.6 seconds. The joined video is 114.6 seconds, because each of the six
-cross-fades overlaps two scenes by 0.5 seconds.
+Scenes total 61.8 seconds. The joined video is 59.8 seconds, because each of the four
+cross-fades overlaps two scenes by 0.5 seconds. To keep it near one minute after a
+script edit, aim for about 142 narration words in total.
 
 ## Line up a voiceover
 

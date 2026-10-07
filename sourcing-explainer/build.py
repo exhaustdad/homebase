@@ -3,9 +3,9 @@
     python build.py --preview     fast low-quality pass into output/preview
     python build.py               final 1920x1080, 30 fps pass into output
 
-Steps: check the data, render each scene, split scene 4 into its two narration
-parts, join all scenes with 0.5 second cross-fades, write narration.txt and
-captions.srt, and save one still frame per scene for a layout check.
+Steps: check the data, render each scene, export one file per narration part
+for any scene that has several, join all scenes with 0.5 second cross-fades,
+write narration.txt and captions.srt, and save one still frame per scene.
 """
 
 import argparse
@@ -21,12 +21,10 @@ from config import CROSSFADE, NARRATION, SCENE_HEADINGS, SCENE_ORDER, scene_timi
 HERE = Path(__file__).resolve().parent
 SCENE_CLASSES = {
     "00_title": "TitleScene",
-    "01_vendors": "VendorsScene",
+    "01_problem": "ProblemScene",
     "02_flow": "FlowScene",
-    "03_posture": "PostureScene",
-    "04_dollars": "DollarsScene",
-    "05_agents": "AgentsScene",
-    "06_ahead": "AheadScene",
+    "03_dollars": "DollarsScene",
+    "04_action": "ActionScene",
 }
 QUALITY = {
     "preview": {"flags": ["-ql"], "folder": "480p15", "fps": 15},
@@ -58,15 +56,22 @@ def render(key, mode, media_dir, out_dir):
     return dst
 
 
-def split_scene4(path, out_dir):
-    _, _, starts = scene_timing("04_dollars")
-    cut = starts[1]
-    a, b = out_dir / "04a_dollars_part1.mp4", out_dir / "04b_dollars_part2.mp4"
-    run(["ffmpeg", "-y", "-v", "error", "-i", str(path), "-t", f"{cut:.3f}",
-         "-c:v", "libx264", "-pix_fmt", "yuv420p", "-an", str(a)])
-    run(["ffmpeg", "-y", "-v", "error", "-ss", f"{cut:.3f}", "-i", str(path),
-         "-c:v", "libx264", "-pix_fmt", "yuv420p", "-an", str(b)])
-    return a, b
+def split_parts(key, out_dir):
+    """Export one file per narration part for scenes that have more than one."""
+    _, _, starts = scene_timing(key)
+    if len(starts) < 2:
+        return []
+    src = out_dir / f"{key}.mp4"
+    ends = starts[1:] + [None]
+    outs = []
+    for i, (s, e) in enumerate(zip(starts, ends), 1):
+        dst = out_dir / f"{key}_part{i}.mp4"
+        cmd = ["ffmpeg", "-y", "-v", "error", "-ss", f"{s:.3f}", "-i", str(src)]
+        if e is not None:
+            cmd += ["-t", f"{e - s:.3f}"]
+        run(cmd + ["-c:v", "libx264", "-pix_fmt", "yuv420p", "-an", str(dst)])
+        outs.append(dst)
+    return outs
 
 
 def scene_offsets(durations):
@@ -137,7 +142,7 @@ def stills(paths, out_dir):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--preview", action="store_true", help="fast low-quality render")
-    ap.add_argument("--only", nargs="*", help="scene keys to render, for example 04_dollars")
+    ap.add_argument("--only", nargs="*", help="scene keys to render, for example 03_dollars")
     args = ap.parse_args()
 
     config.assert_data()
@@ -159,7 +164,8 @@ def main():
         flag = "" if abs(a - b) <= 1.5 * frame else "  MISMATCH"
         print(f"{k:15s} {a:8.2f}s {b:9.2f}s{flag}")
 
-    split_scene4(out_dir / "04_dollars.mp4", out_dir)
+    for key in SCENE_ORDER:
+        split_parts(key, out_dir)
     combined = out_dir / "explainer_combined.mp4"
     combine(paths, planned, QUALITY[mode]["fps"], combined)
     write_captions(planned, out_dir / "captions.srt")

@@ -31,63 +31,32 @@ LEAD = PADDING / 2
 CROSSFADE = 0.5
 
 # Narration. Each entry is one narration part; each part is a list of sentences.
-# Scene 4 has two parts, and each part gets its own padding.
+# A scene with more than one part gets padding per part and is also exported
+# as one file per part. Total runtime is about one minute.
 NARRATION = {
     "00_title": [[
-        "From vendor noise to sourcing decisions: the Supplier Intelligence Hub.",
+        "From vendor noise to sourcing decisions.",
     ]],
-    "01_vendors": [[
-        "One sourcing portfolio can hold more than 150 vendors.",
-        "Each dot is one vendor.",
-        "Every vendor produces signals.",
-        "Some need action now.",
-        "The signals live in separate systems.",
-        "No one person can watch all of them.",
+    "01_problem": [[
+        "One portfolio holds 150 vendors, with signals in five separate systems.",
+        "18 need action now.",
+        "No one can see them all.",
     ]],
     "02_flow": [[
-        "The Supplier Intelligence Hub collects these signals in one flow.",
-        "First, it reads the sources.",
-        "A weekly brief gives the full picture.",
-        "An always-on early warning watches for sudden changes.",
-        "Both send their output to one place.",
+        "The hub reads every source.",
+        "A weekly brief and an always-on warning feed one Slack hub with six agents.",
+        "Every signal gets one of four postures that say what to do next.",
     ]],
-    "03_posture": [[
-        "Each signal gets a posture.",
-        "There are four postures.",
-        "Each one tells the team what to do next.",
-        "Take Vendor X.",
-        "It renews in 90 days, and the draft raises the price cap.",
-        "The posture is Increase Leverage.",
-        "The team uses timing and options.",
+    "03_dollars": [[
+        "Take Vendor X: fictional, with 1 million dollars of annual spend.",
+        "Its renewal draft raises the price cap from 2 to 6 percent.",
+        "The most it can add each year rises from 20,000 to 60,000 dollars.",
+        "That is 40,000 dollars of new exposure.",
     ]],
-    "04_dollars": [
-        [
-            "Now a worked example.",
-            "Vendor X is fictional.",
-            "All numbers are illustrative.",
-            "Vendor X costs 1 million dollars a year.",
-            "The old contract capped the yearly increase at 2 percent.",
-            "That is at most 20,000 dollars.",
-            "The new draft caps it at 6 percent.",
-            "That is at most 60,000 dollars.",
-        ],
-        [
-            "The gap is 40,000 dollars of added exposure each year.",
-            "The action: ask to restore the 2 percent cap before the renewal date.",
-        ],
-    ],
-    "05_agents": [[
-        "Next, how the work happens.",
-        "Everything runs in one Slack hub.",
-        "Six agents work there.",
-        "Each agent has one job.",
-        "Together they turn signals into briefs, risk checks, deal support, spend views, and waste checks.",
-    ]],
-    "06_ahead": [[
-        "Today the hub tells us what happened.",
-        "Next, it tells us what is coming.",
-        "We see the renewal, the risk, and the price change before they arrive.",
-        "Early sight gives us time to act.",
+    "04_action": [[
+        "With 90 days to renewal, the posture is Increase Leverage: ask to restore the 2 percent cap.",
+        "The hub flags renewals, risks, and price changes early.",
+        "Early sight turns a surprise cost into a negotiation.",
         "Early action drives the business.",
     ]],
 }
@@ -95,12 +64,10 @@ NARRATION = {
 SCENE_ORDER = list(NARRATION.keys())
 SCENE_HEADINGS = {
     "00_title": "Scene 0, title card",
-    "01_vendors": "Scene 1, Too many vendors, too many places",
-    "02_flow": "Scene 2, One flow, two speeds",
-    "03_posture": "Scene 3, Every signal gets a posture",
-    "04_dollars": "Scene 4, From signal to dollars",
-    "05_agents": "Scene 5, Six agents, one hub",
-    "06_ahead": "Scene 6, From reacting to seeing ahead",
+    "01_problem": "Scene 1, Too many vendors, too many places",
+    "02_flow": "Scene 2, One flow, four postures",
+    "03_dollars": "Scene 3, From signal to dollars",
+    "04_action": "Scene 4, Early sight, better terms",
 }
 
 
@@ -144,12 +111,10 @@ def scene_duration(key):
 GRID_COLS = 15
 GRID_ROWS = 10
 VENDOR_COUNT = GRID_COLS * GRID_ROWS
-GOLD_SIGNALS = 11
-CORAL_SIGNALS = 7
-FLAGGED = GOLD_SIGNALS + CORAL_SIGNALS
+FLAGGED = 18  # vendors that need action now
 SOURCES = ["Contracts", "Renewal dates", "Security reviews", "Usage data", "Market news"]
 
-# Scene 3: postures and the Vendor X example
+# Scene 2: postures; scene 4: the Vendor X call
 POSTURES = [
     ("Protect Margin", "Hold price and terms"),
     ("Increase Leverage", "Use timing and options"),
@@ -160,7 +125,7 @@ VENDOR = "Vendor X"
 RENEWAL_DAYS = 90
 CHOSEN_POSTURE = "Increase Leverage"
 
-# Scene 4: the worked example
+# Scene 3: the worked example
 SPEND = 1000000
 OLD_CAP = 0.02
 NEW_CAP = 0.06
@@ -168,7 +133,7 @@ old_max = SPEND * OLD_CAP
 new_max = SPEND * NEW_CAP
 gap = new_max - old_max
 
-# Scene 5: agents
+# Scene 2: agents
 AGENTS = [
     ("Sourcing Signal", "Weekly brief"),
     ("Category Brief", "Category view"),
@@ -207,20 +172,25 @@ def assert_data():
     assert len(AGENTS) == 6
 
     # Spoken numbers must match the variables.
-    n = NARRATION
-    assert f"more than {VENDOR_COUNT} vendors" in n["01_vendors"][0][0]
-    assert f"renews in {RENEWAL_DAYS} days" in " ".join(n["03_posture"][0])
-    a, b = n["04_dollars"]
-    assert f"{SPEND // 1000000} million dollars" in " ".join(a)
-    assert f"{round(OLD_CAP * 100)} percent" in " ".join(a)
-    assert f"{round(NEW_CAP * 100)} percent" in " ".join(a)
-    assert f"{int(old_max):,} dollars" in " ".join(a)
-    assert f"{int(new_max):,} dollars" in " ".join(a)
-    assert f"{int(gap):,} dollars" in " ".join(b)
-    assert f"{round(OLD_CAP * 100)} percent cap" in " ".join(b)
+    words = {4: "four", 5: "five", 6: "six"}
+    n = {k: " ".join(s for part in v for s in part) for k, v in NARRATION.items()}
+    assert f"{VENDOR_COUNT} vendors" in n["01_problem"]
+    assert f"{words[len(SOURCES)]} separate systems" in n["01_problem"]
+    assert f"{FLAGGED} need action now" in n["01_problem"]
+    assert f"{words[len(AGENTS)]} agents" in n["02_flow"]
+    assert f"{words[len(POSTURES)]} postures" in n["02_flow"]
+    a = n["03_dollars"]
+    assert f"{SPEND // 1000000} million dollars" in a
+    assert f"from {round(OLD_CAP * 100)} to {round(NEW_CAP * 100)} percent" in a
+    assert f"from {int(old_max):,} to {int(new_max):,} dollars" in a
+    assert f"{int(gap):,} dollars of new exposure" in a
+    b = n["04_action"]
+    assert f"{RENEWAL_DAYS} days to renewal" in b
+    assert f"posture is {CHOSEN_POSTURE}" in b
+    assert f"restore the {round(OLD_CAP * 100)} percent cap" in b
 
     # No em dash anywhere in narration.
-    for parts in n.values():
+    for parts in NARRATION.values():
         for part in parts:
             for s in part:
                 assert "\u2014" not in s
