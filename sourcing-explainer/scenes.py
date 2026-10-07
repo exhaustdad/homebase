@@ -24,59 +24,40 @@ def vendor_tag(name, desc):
     return b, t
 
 
-class S00Hook(BeatScene):
-    key = "00_hook"
+class S00Want(BeatScene):
+    key = "00_want"
 
     def construct(self):
-        saves = Text("Sourcing saves money.", font=C.SERIF, font_size=60, color=C.MUTED)
-        makes = Text("Sourcing makes money.", font=C.SERIF, font_size=60, color=C.INK)
-        saves.move_to([0, 1.5, 0])
-        makes.move_to(saves)
-        stats = [
-            (f"{C.WEEKS_SAVED} weeks", "sooner to launch", C.TEAL),
-            (f"{C.DAYS_TO_PEAK} days", "of warning", C.BLUE),
-            (C.usd(C.gap), "a year in margin", C.GOLD),
-        ]
-        cols = VGroup()
-        for value, sub, color in stats:
-            v = Text(value, font=C.SERIF, font_size=64, color=color)
-            s = label(sub, size=24, color=C.MUTED)
-            cols.add(VGroup(v, s).arrange(DOWN, buff=0.22))
-        cols.arrange(RIGHT, buff=1.4).move_to([0, -1.1, 0])
-        sub_y = min(c[1].get_y() for c in cols)
-        for c in cols:
-            c[1].set_y(sub_y)
+        lead = Text("Every CFO wants two things.", font=C.SERIF, font_size=44, color=C.MUTED)
+        one = Text("No surprises.", font=C.SERIF, font_size=76, color=C.INK)
+        two = Text("Spend that moves the business forward.", font=C.SERIF, font_size=48, color=C.INK)
+        VGroup(lead, one, two).arrange(DOWN, buff=0.6).move_to([0, -0.1, 0])
 
-        self.beat(0)  # Most people think sourcing saves money.
-        self.run(FadeIn(saves, shift=UP * 0.12), run_time=0.9)
-        self.beat(1)  # Great sourcing makes money.
-        self.run(FadeOut(saves, shift=UP * 0.2), FadeIn(makes, shift=UP * 0.2), run_time=0.9)
-        self.beat(2)  # Here is what that looks like.
-        self.run(LaggedStart(*[FadeIn(c, shift=UP * 0.15) for c in cols], lag_ratio=0.35), run_time=1.6)
+        self.beat(0)  # Every CFO wants two things.
+        self.run(FadeIn(lead, shift=UP * 0.12), run_time=0.9)
+        self.beat(1)  # No surprises.
+        self.run(FadeIn(one, shift=UP * 0.15), run_time=0.7)
+        self.beat(2)  # Spend that moves the business forward.
+        self.run(FadeIn(two, shift=UP * 0.15), run_time=0.9)
         self.finish()
 
 
-class S01Built(BeatScene):
-    key = "01_built"
+class S01Promise(BeatScene):
+    key = "01_promise"
 
     def construct(self):
-        l1 = Text("From Vendor Noise", font=C.SERIF, font_size=80, color=C.INK)
-        l2 = Text("to Business Decisions", font=C.SERIF, font_size=80, color=C.INK)
-        l2.next_to(l1, DOWN, buff=0.3, aligned_edge=LEFT)
+        colors = [C.INK, C.INK, C.GOLD]
+        lines = VGroup(*[Text(t, font=C.SERIF, font_size=72, color=c) for t, c in zip(C.PROMISE, colors)])
+        lines.arrange(DOWN, buff=0.35, aligned_edge=LEFT)
         rule = Line(ORIGIN, RIGHT * 1.4, stroke_color=C.GOLD, stroke_width=4)
-        rule.next_to(l2, DOWN, buff=0.55, aligned_edge=LEFT)
-        sub = label("The Supplier Intelligence Hub", size=34, color=C.MUTED)
-        sub.next_to(rule, DOWN, buff=0.4, aligned_edge=LEFT)
-        ai = label("An AI system for strategic sourcing", size=26, color=C.TEAL)
-        ai.next_to(sub, DOWN, buff=0.22, aligned_edge=LEFT)
-        VGroup(l1, l2, rule, sub, ai).move_to(ORIGIN).shift(DOWN * 0.1)
+        hub = label("The Supplier Intelligence Hub", size=30, color=C.MUTED)
+        VGroup(lines, rule, hub).arrange(DOWN, buff=0.5, aligned_edge=LEFT).move_to([0, -0.1, 0])
 
-        self.beat(0)
-        self.run(FadeIn(l1, shift=UP * 0.15), run_time=1.0)
-        self.run(FadeIn(l2, shift=UP * 0.15), run_time=1.0)
-        self.run(Create(rule), run_time=0.6)
-        self.run(FadeIn(sub), run_time=0.8)
-        self.run(FadeIn(ai), run_time=0.8)
+        # "So here is the promise: no surprises, faster yeses, and every yes backed by data."
+        for line, word_index in zip(lines, (5, 7, 11)):
+            self.at(C.beats(self.key)[0] + word_index / C.WORDS_PER_SECOND)
+            self.run(FadeIn(line, shift=UP * 0.15), run_time=0.7)
+        self.run(Create(rule), FadeIn(hub), run_time=0.8)
         self.finish()
 
 
@@ -126,7 +107,7 @@ class S02Growth(BeatScene):
         rev_lab = label(f"+{C.WEEKS_SAVED} weeks of revenue", size=24, color=C.INK, weight="SEMIBOLD")
         rev_lab.move_to(gap_box)
 
-        self.beat(0)  # Start with growth.
+        self.beat(0)  # First, a faster yes.
         self.run(FadeIn(title, shift=RIGHT * 0.2), run_time=0.9)
         self.beat(1)  # Vendor Y.
         self.run(FadeIn(tag_b), FadeIn(tag_t), run_time=0.8)
@@ -178,7 +159,7 @@ class S03Revenue(BeatScene):
         final = Text("Peak revenue protected.", font=C.SERIF, font_size=46, color=C.GOLD)
         final.move_to([0, -2.75, 0])
 
-        self.beat(0)  # Then revenue.
+        self.beat(0)  # Next, no surprises.
         self.run(FadeIn(title, shift=RIGHT * 0.2), run_time=0.7)
         self.beat(1)  # Vendor Z supports ad delivery.
         self.run(FadeIn(tag_b), FadeIn(tag_t), run_time=0.6)
@@ -254,7 +235,7 @@ class S04Margin(BeatScene):
         act_box.move_to([-6.6 + act_box.width / 2, -3.15, 0])
         act_txt.move_to(act_box)
 
-        self.beat(0)  # And yes, margin.
+        self.beat(0)  # And no leakage.
         self.run(FadeIn(title, shift=RIGHT * 0.2), run_time=0.9)
         self.beat(1)  # Draft raises the cap from 2 to 6 percent.
         self.run(FadeIn(spend), run_time=0.7)
@@ -271,8 +252,8 @@ class S04Margin(BeatScene):
         self.finish()
 
 
-class S05How(BeatScene):
-    key = "05_how"
+class S06How(BeatScene):
+    key = "06_how"
 
     def construct(self):
         title = self.title(C.SCENE_TITLES[self.key])
@@ -292,7 +273,7 @@ class S05How(BeatScene):
 
         stages = [
             ("Read", "Contracts, reviews, news", C.BLUE),
-            ("Score", "Signal and posture", C.CORAL),
+            ("Score", "Signal, posture, source", C.CORAL),
             ("Recommend", "Brief and next move", C.TEAL),
             ("Decide", "A person makes the call", C.GOLD),
         ]
@@ -347,76 +328,74 @@ class S05How(BeatScene):
         self.finish()
 
 
-class S06Rules(BeatScene):
-    key = "06_rules"
+class S05Data(BeatScene):
+    key = "05_data"
 
     def construct(self):
         title = self.title(C.SCENE_TITLES[self.key])
-        rules = [
-            ("AI reads. People decide.", C.TEAL),
-            ("Every number traces to a source.", C.BLUE),
-            ("It runs in Slack, where the team already works.", C.GOLD),
+        rows_spec = [
+            (f"{C.WEEKS_SAVED} weeks", "sooner to launch", C.TEAL, "Sourcing cycle log", "Vendor Y"),
+            (C.pct(C.USAGE), "of capacity used", C.BLUE, "Usage data", "Vendor Z"),
+            (C.usd(C.gap), "a year in added exposure", C.GOLD, "Contract draft, price cap clause", "Vendor X"),
         ]
-        rows = VGroup()
-        for i, (text, color) in enumerate(rules, 1):
-            c = card(12.0, 1.2)
-            num = Text(str(i), font=C.SERIF, font_size=54, color=color)
-            t = label(text, size=30)
-            num.move_to(c.get_left() + RIGHT * 0.75)
-            t.next_to(num, RIGHT, buff=0.6)
-            num.set_z_index(1), t.set_z_index(1)
-            rows.add(VGroup(c, num, t))
-        rows.arrange(DOWN, buff=0.35).move_to([0, -0.35, 0])
+        values, sources, arrows = VGroup(), VGroup(), VGroup()
+        for i, (val, sub, color, src, vendor) in enumerate(rows_spec):
+            y = 1.35 - i * 1.45
+            v = Text(val, font=C.SERIF, font_size=54, color=color)
+            sb = label(sub, size=20, color=C.MUTED)
+            vg = VGroup(v, sb).arrange(DOWN, buff=0.12, aligned_edge=LEFT)
+            vg.move_to([-6.4 + vg.width / 2, y, 0])
+            head = label(f"Source: {vendor}", size=18, color=C.MUTED)
+            rec = label(src, size=24, weight="SEMIBOLD")
+            txt = VGroup(head, rec).arrange(DOWN, buff=0.1, aligned_edge=LEFT).set_z_index(1)
+            box = card(6.3, 1.05, stroke=color, width=2.5).move_to([3.65, y, 0])
+            txt.move_to(box).align_to(box, LEFT).shift(RIGHT * 0.35)
+            values.add(vg)
+            sources.add(VGroup(box, txt))
+            arrows.add(Arrow(box.get_left(), [-1.9, y, 0], buff=0.1, stroke_width=3, stroke_color=color,
+                             max_tip_length_to_length_ratio=0.15))
 
-        self.beat(0)  # Three rules.
+        claim = chip("Claim with no source", color=C.MUTED, stroke=C.CORAL, size=24)
+        strike = Line(claim.get_left(), claim.get_right(), stroke_color=C.CORAL, stroke_width=4)
+        rule = Text("No source, no number.", font=C.SERIF, font_size=46, color=C.GOLD)
+        VGroup(VGroup(claim, strike), rule).arrange(RIGHT, buff=0.9).move_to([0, -3.0, 0])
+        strike.move_to(claim)
+
+        self.beat(0)  # Every yes is backed by data.
         self.run(FadeIn(title, shift=RIGHT * 0.2), run_time=0.9)
-        for i, row in enumerate(rows):
-            self.beat(1 + i)
-            self.run(FadeIn(row, shift=UP * 0.15), run_time=0.8)
-            self.run(row[0].animate.set_stroke(rules[i][1], width=3), run_time=0.4)
+        self.run(LaggedStart(*[FadeIn(v, shift=UP * 0.1) for v in values], lag_ratio=0.3), run_time=1.2)
+        self.beat(1)  # Each number links to the record it came from.
+        self.run(LaggedStart(*[Create(a) for a in arrows], lag_ratio=0.3), run_time=1.2)
+        for i in range(3):  # Sourcing log, usage data, contract draft.
+            self.beat(2 + i)
+            self.run(FadeIn(sources[i], shift=LEFT * 0.15), run_time=0.8)
+        self.beat(5)  # No source, no number.
+        self.run(FadeIn(claim), run_time=0.3)
+        self.run(Create(strike), claim.animate.set_opacity(0.4), run_time=0.4)
+        self.run(FadeIn(rule, shift=UP * 0.1), run_time=0.7)
         self.finish()
 
 
 class S07Close(BeatScene):
     key = "07_close"
 
-    def make_card(self, head, items, stroke, dashed, head_color, x, w):
-        h = 3.0
-        fill = RoundedRectangle(width=w, height=h, corner_radius=C.CARD_RADIUS,
-                                fill_color=C.PANEL, fill_opacity=1, stroke_width=0)
-        outline = RoundedRectangle(width=w, height=h, corner_radius=C.CARD_RADIUS,
-                                   stroke_color=stroke, stroke_width=3)
-        if dashed:
-            outline = DashedVMobject(outline, num_dashes=70, dashed_ratio=0.55)
-        ht = Text(head, font=C.SERIF, font_size=44, color=head_color)
-        rows = VGroup()
-        for it in items:
-            rows.add(VGroup(Dot(radius=0.06, color=head_color), label(it, size=21)).arrange(RIGHT, buff=0.22))
-        rows.arrange(DOWN, buff=0.3, aligned_edge=LEFT)
-        content = VGroup(ht, rows).arrange(DOWN, buff=0.4, aligned_edge=LEFT)
-        grp = VGroup(fill, outline).move_to([x, 0.35, 0])
-        content.move_to(grp).align_to(fill, LEFT).shift(RIGHT * 0.42)
-        return grp, ht, rows
-
     def construct(self):
-        title = self.title(C.SCENE_TITLES[self.key])
-        today, t_head, t_rows = self.make_card(
-            "Today", ["Reacts to signals", "Finds issues as they arrive"], C.MUTED, True, C.MUTED, -3.85, 5.6)
-        nxt, n_head, n_rows = self.make_card(
-            "Next", ["Sees what is coming", "Flags risks and openings early"], C.TEAL, False, C.TEAL, 3.55, 6.6)
-        arrow = Arrow(today.get_right() + RIGHT * 0.08, nxt.get_left() + LEFT * 0.08, buff=0,
-                      stroke_color=C.INK, stroke_width=4, max_tip_length_to_length_ratio=0.3)
-        line1 = Text("Sourcing becomes a growth function.", font=C.SERIF, font_size=40, color=C.INK)
-        line1.move_to([0, -2.1, 0])
-        line2 = Text("Early action drives the business.", font=C.SERIF, font_size=46, color=C.GOLD)
-        line2.move_to([0, -3.0, 0])
+        hub = Text("The Supplier Intelligence Hub", font=C.SERIF, font_size=56, color=C.INK)
+        rule = Line(ORIGIN, RIGHT * 1.4, stroke_color=C.GOLD, stroke_width=4)
+        ask = Text("“Did we see this coming?”", font=C.SERIF, font_size=48, color=C.MUTED)
+        yes = Text("Yes.", font=C.SERIF, font_size=84, color=C.GOLD)
+        colors = [C.TEAL, C.BLUE, C.GOLD]
+        pills = VGroup(*[chip(t, color=c, stroke=c, size=28, h=0.7) for t, c in zip(C.PROMISE, colors)])
+        pills.arrange(RIGHT, buff=0.45)
+        VGroup(hub, rule, ask, yes, pills).arrange(DOWN, buff=0.45).move_to([0, -0.05, 0])
 
-        self.beat(0)  # From reacting to seeing ahead.
-        self.run(FadeIn(title, shift=RIGHT * 0.2), FadeIn(today), FadeIn(t_head), FadeIn(t_rows), run_time=0.9)
-        self.run(Create(arrow), run_time=0.5)
-        self.run(FadeIn(nxt, shift=LEFT * 0.15), FadeIn(n_head, shift=LEFT * 0.15), FadeIn(n_rows), run_time=1.0)
-        self.beat(1)  # Sourcing becomes a growth function.
-        self.run(FadeIn(line1, shift=UP * 0.1), run_time=0.9)
-        self.beat(2)  # Early action drives the business.
-        self.run(FadeIn(line2, shift=UP * 0.12), run_time=1.0)
+        self.beat(0)  # I built the Supplier Intelligence Hub.
+        self.run(FadeIn(hub, shift=UP * 0.12), Create(rule), run_time=1.0)
+        self.beat(1)  # When the CFO asks, did we see this coming...
+        self.run(FadeIn(ask, shift=UP * 0.1), run_time=0.9)
+        self.beat(1, delay=10 / C.WORDS_PER_SECOND)  # ...the answer is yes.
+        self.run(FadeIn(yes, scale=1.15), run_time=0.8)
+        for i in range(3):  # No surprises. Faster yeses. Backed by data.
+            self.beat(2 + i)
+            self.run(FadeIn(pills[i], shift=UP * 0.1), run_time=0.6)
         self.finish()

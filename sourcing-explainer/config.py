@@ -35,26 +35,26 @@ FPS_FINAL = 30
 VENDOR_Z_ROLE = "ad delivery"
 
 # Narration. Each scene is a list of parts; each part is a list of sentences.
-# Story order: value first (hook, growth, revenue, margin), then how AI fits in.
+# Story: what the CFO wants, the promise, three proofs, the data behind them, then how.
 NARRATION = {
-    "00_hook": [[
-        "Most people think sourcing saves money.",
-        "Great sourcing makes money.",
-        "Here is what that looks like.",
+    "00_want": [[
+        "Every CFO wants two things.",
+        "No surprises.",
+        "And spend that moves the business forward.",
     ]],
-    "01_built": [[
-        "I built the Supplier Intelligence Hub, an AI system that turns vendor noise into business decisions.",
+    "01_promise": [[
+        "So here is the promise: no surprises, faster yeses, and every yes backed by data.",
     ]],
     "02_growth": [[
-        "Start with growth.",
+        "First, a faster yes.",
         "A product team needs Vendor Y, a fictional data partner, to launch.",
         "A typical sourcing cycle takes 12 weeks.",
-        "With reviews and a shortlist already in the hub, it takes 4 weeks.",
+        "With reviews and a shortlist ready before the ask, it takes 4 weeks.",
         "The launch ships 8 weeks earlier.",
         "That is 8 more weeks of revenue.",
     ]],
     "03_revenue": [[
-        "Then revenue.",
+        "Next, no surprises.",
         f"Vendor Z, also fictional, supports {VENDOR_Z_ROLE}.",
         "Usage is at 85 percent of capacity.",
         "The vendor was just acquired.",
@@ -64,44 +64,51 @@ NARRATION = {
         "The team locks in capacity and a backup before the peak.",
     ]],
     "04_margin": [[
-        "And yes, margin.",
+        "And no leakage.",
         "Vendor X's renewal draft raises the price cap from 2 percent to 6 percent.",
-        "On 1 million dollars of spend, that is 40,000 dollars a year.",
+        "On 1 million dollars of spend, that is 40,000 dollars a year, caught in the draft, not on the invoice.",
         "The move: restore the 2 percent cap before renewal.",
     ]],
-    "05_how": [[
+    "05_data": [[
+        "Every yes is backed by data.",
+        "Each number links to the record it came from.",
+        "The cycle time comes from the sourcing log.",
+        "The capacity risk comes from usage data.",
+        "The 40,000 dollars comes from the contract draft.",
+        "No source, no number.",
+    ]],
+    "06_how": [[
         "Here is how AI fits in.",
-        "One portfolio holds more than 150 vendors, with signals spread across five systems.",
+        "One portfolio holds more than 150 vendors, with signals across five systems.",
         "No person can watch them all.",
         "AI agents read every contract, renewal, review, and news item.",
-        "They score each signal and assign a posture.",
+        "They score each signal and cite the source.",
         "They draft the brief and the next move.",
         "A person makes the call.",
     ]],
-    "06_rules": [[
-        "Three rules make it work.",
-        "AI does the reading, and people make the decisions.",
-        "Every number traces back to a source.",
-        "And it runs in Slack, where the team already works.",
-    ]],
     "07_close": [[
-        "That is the shift, from reacting to seeing ahead.",
-        "Sourcing becomes a growth function.",
-        "Early action drives the business.",
+        "I built the Supplier Intelligence Hub for one reason.",
+        "So when the CFO asks, did we see this coming, the answer is yes.",
+        "No surprises.",
+        "Faster yeses.",
+        "Backed by data.",
     ]],
 }
 
 SCENE_ORDER = list(NARRATION.keys())
 SCENE_TITLES = {
-    "00_hook": None,
-    "01_built": None,
-    "02_growth": "Speed is revenue",
-    "03_revenue": "Looking around the corner",
-    "04_margin": "From signal to dollars",
-    "05_how": "How AI fits in",
-    "06_rules": "Three rules",
-    "07_close": "From reacting to seeing ahead",
+    "00_want": None,
+    "01_promise": None,
+    "02_growth": "A faster yes",
+    "03_revenue": "No surprises",
+    "04_margin": "Caught in the draft",
+    "05_data": "Backed by data",
+    "06_how": "How AI fits in",
+    "07_close": None,
 }
+
+# The promise, used on screen in Scenes 1 and 7.
+PROMISE = ["No surprises.", "Faster yeses.", "Backed by data."]
 
 
 def words(text):
@@ -202,8 +209,9 @@ DAYS_TO_PEAK = 120
 
 # The narration must agree with the numbers on screen.
 _j = lambda k: " ".join(s for p in NARRATION[k] for s in p)
-_m, _g, _r, _h = _j("04_margin"), _j("02_growth"), _j("03_revenue"), _j("05_how")
-assert f"{int(gap):,} dollars" in _m
+_m, _g, _r, _h = _j("04_margin"), _j("02_growth"), _j("03_revenue"), _j("06_how")
+assert f"{int(gap):,} dollars" in _m and f"{int(gap):,} dollars" in _j("05_data")
+assert NARRATION["07_close"][0][2:] == PROMISE
 assert f"{round(OLD_CAP * 100)} percent to {round(NEW_CAP * 100)} percent" in _m
 assert f"restore the {round(OLD_CAP * 100)} percent cap" in _m
 assert f"{SPEND // 1000000} million dollars" in _m

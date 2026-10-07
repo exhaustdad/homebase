@@ -1,143 +1,159 @@
 1
-00:00:00,000 --> 00:00:02,400
-Most people think sourcing saves money.
+00:00:00,000 --> 00:00:02,000
+Every CFO wants two things.
 
 2
-00:00:02,400 --> 00:00:04,000
-Great sourcing makes money.
+00:00:02,000 --> 00:00:02,800
+No surprises.
 
 3
-00:00:04,000 --> 00:00:06,400
-Here is what that looks like.
+00:00:02,800 --> 00:00:05,600
+And spend that moves the business forward.
 
 4
-00:00:06,900 --> 00:00:13,300
-I built the Supplier Intelligence Hub, an AI system that turns vendor noise into business decisions.
+00:00:06,100 --> 00:00:12,100
+So here is the promise: no surprises, faster yeses, and every yes backed by data.
 
 5
-00:00:13,800 --> 00:00:15,000
-Start with growth.
+00:00:12,600 --> 00:00:14,200
+First, a faster yes.
 
 6
-00:00:15,000 --> 00:00:19,800
+00:00:14,200 --> 00:00:19,000
 A product team needs Vendor Y, a fictional data partner, to launch.
 
 7
-00:00:19,800 --> 00:00:22,600
+00:00:19,000 --> 00:00:21,800
 A typical sourcing cycle takes 12 weeks.
 
 8
-00:00:22,600 --> 00:00:27,800
-With reviews and a shortlist already in the hub, it takes 4 weeks.
+00:00:21,800 --> 00:00:27,000
+With reviews and a shortlist ready before the ask, it takes 4 weeks.
 
 9
-00:00:27,800 --> 00:00:30,200
+00:00:27,000 --> 00:00:29,400
 The launch ships 8 weeks earlier.
 
 10
-00:00:30,200 --> 00:00:33,000
+00:00:29,400 --> 00:00:32,200
 That is 8 more weeks of revenue.
 
 11
-00:00:33,500 --> 00:00:34,300
-Then revenue.
+00:00:32,700 --> 00:00:33,900
+Next, no surprises.
 
 12
-00:00:34,300 --> 00:00:37,100
+00:00:33,900 --> 00:00:36,700
 Vendor Z, also fictional, supports ad delivery.
 
 13
-00:00:37,100 --> 00:00:39,900
+00:00:36,700 --> 00:00:39,500
 Usage is at 85 percent of capacity.
 
 14
-00:00:39,900 --> 00:00:41,900
+00:00:39,500 --> 00:00:41,500
 The vendor was just acquired.
 
 15
-00:00:41,900 --> 00:00:44,300
+00:00:41,500 --> 00:00:43,900
 Peak season is 120 days out.
 
 16
-00:00:44,300 --> 00:00:46,300
+00:00:43,900 --> 00:00:45,900
 Alone, each signal is noise.
 
 17
-00:00:46,300 --> 00:00:48,300
+00:00:45,900 --> 00:00:47,900
 Together, they say act now.
 
 18
-00:00:48,300 --> 00:00:52,700
+00:00:47,900 --> 00:00:52,300
 The team locks in capacity and a backup before the peak.
 
 19
-00:00:53,200 --> 00:00:54,400
-And yes, margin.
+00:00:52,800 --> 00:00:54,000
+And no leakage.
 
 20
-00:00:54,400 --> 00:01:00,000
+00:00:54,000 --> 00:00:59,600
 Vendor X's renewal draft raises the price cap from 2 percent to 6 percent.
 
 21
-00:01:00,000 --> 00:01:04,800
-On 1 million dollars of spend, that is 40,000 dollars a year.
+00:00:59,600 --> 00:01:07,600
+On 1 million dollars of spend, that is 40,000 dollars a year, caught in the draft, not on the invoice.
 
 22
-00:01:04,800 --> 00:01:08,400
+00:01:07,600 --> 00:01:11,200
 The move: restore the 2 percent cap before renewal.
 
 23
-00:01:08,900 --> 00:01:11,300
-Here is how AI fits in.
+00:01:11,700 --> 00:01:14,100
+Every yes is backed by data.
 
 24
-00:01:11,300 --> 00:01:16,500
-One portfolio holds more than 150 vendors, with signals spread across five systems.
+00:01:14,100 --> 00:01:17,700
+Each number links to the record it came from.
 
 25
-00:01:16,500 --> 00:01:18,900
-No person can watch them all.
+00:01:17,700 --> 00:01:20,900
+The cycle time comes from the sourcing log.
 
 26
-00:01:18,900 --> 00:01:22,900
-AI agents read every contract, renewal, review, and news item.
+00:01:20,900 --> 00:01:23,700
+The capacity risk comes from usage data.
 
 27
-00:01:22,900 --> 00:01:26,100
-They score each signal and assign a posture.
+00:01:23,700 --> 00:01:26,900
+The 40,000 dollars comes from the contract draft.
 
 28
-00:01:26,100 --> 00:01:29,300
-They draft the brief and the next move.
+00:01:26,900 --> 00:01:28,500
+No source, no number.
 
 29
-00:01:29,300 --> 00:01:31,300
-A person makes the call.
+00:01:29,000 --> 00:01:31,400
+Here is how AI fits in.
 
 30
-00:01:31,800 --> 00:01:33,800
-Three rules make it work.
+00:01:31,400 --> 00:01:36,200
+One portfolio holds more than 150 vendors, with signals across five systems.
 
 31
-00:01:33,800 --> 00:01:37,400
-AI does the reading, and people make the decisions.
+00:01:36,200 --> 00:01:38,600
+No person can watch them all.
 
 32
-00:01:37,400 --> 00:01:40,200
-Every number traces back to a source.
+00:01:38,600 --> 00:01:42,600
+AI agents read every contract, renewal, review, and news item.
 
 33
-00:01:40,200 --> 00:01:44,200
-And it runs in Slack, where the team already works.
+00:01:42,600 --> 00:01:45,800
+They score each signal and cite the source.
 
 34
-00:01:44,700 --> 00:01:48,300
-That is the shift, from reacting to seeing ahead.
+00:01:45,800 --> 00:01:49,000
+They draft the brief and the next move.
 
 35
-00:01:48,300 --> 00:01:50,300
-Sourcing becomes a growth function.
+00:01:49,000 --> 00:01:51,000
+A person makes the call.
 
 36
-00:01:50,300 --> 00:01:52,300
-Early action drives the business.
+00:01:51,500 --> 00:01:55,100
+I built the Supplier Intelligence Hub for one reason.
+
+37
+00:01:55,100 --> 00:02:00,700
+So when the CFO asks, did we see this coming, the answer is yes.
+
+38
+00:02:00,700 --> 00:02:01,500
+No surprises.
+
+39
+00:02:01,500 --> 00:02:02,300
+Faster yeses.
+
+40
+00:02:02,300 --> 00:02:03,500
+Backed by data.

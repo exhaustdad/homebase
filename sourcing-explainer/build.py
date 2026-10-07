@@ -20,16 +20,16 @@ MEDIA = ROOT / "build" / "media"
 MANIM = ROOT / ".venv" / "bin" / "manim"
 
 CLASSES = {
-    "00_hook": "S00Hook",
-    "01_built": "S01Built",
+    "00_want": "S00Want",
+    "01_promise": "S01Promise",
     "02_growth": "S02Growth",
     "03_revenue": "S03Revenue",
     "04_margin": "S04Margin",
-    "05_how": "S05How",
-    "06_rules": "S06Rules",
+    "05_data": "S05Data",
+    "06_how": "S06How",
     "07_close": "S07Close",
 }
-SCENE_LABELS = {k: f"Scene {int(k[:2])}, " + (C.SCENE_TITLES[k] or {"00_hook": "hook"}.get(k, "title card"))
+SCENE_LABELS = {k: f"Scene {int(k[:2])}, " + (C.SCENE_TITLES[k] or {"00_want": "what the CFO wants", "01_promise": "the promise", "07_close": "close"}.get(k, "title card"))
                 for k in CLASSES}
 ENC = ["-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "16", "-preset", "medium", "-an"]
 
