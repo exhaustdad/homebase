@@ -1,6 +1,6 @@
 # Supplier Intelligence Hub explainer
 
-A silent, 8 scene explainer (2:04) built with Manim Community Edition. It sells what a CFO wants: no surprises, faster yeses, and every yes backed by data. Three examples prove the promise, a data scene shows where each number comes from, and the close explains how AI fits in. Earlier versions are kept in `output/v2/` (2:31) and `output/v3/` (1:53). All data is synthetic and the vendor ("Vendor X") is fictional. Every scene carries the badge "Illustrative data only. Fictional vendor."
+A silent, 8 scene explainer (2:04) built with Manim Community Edition. It sells what a CFO wants: no surprises, faster yeses, and every yes backed by data. Three examples prove the promise, a data scene shows where each number comes from, then a scene on how AI fits in leads to the close. Earlier versions are kept in `output/v2/` (2:31) and `output/v3/` (1:53). All data is synthetic and the vendor ("Vendor X") is fictional. Every scene carries the badge "Illustrative data only. Fictional vendor."
 
 ## Files
 
