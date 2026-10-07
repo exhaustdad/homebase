@@ -123,6 +123,89 @@ def write_text():
             blocks.append(f"{n}\n{ts(offsets[key] + start)} --> {ts(offsets[key] + end)}\n{sentence}\n")
     (OUT / "captions.srt").write_text("\n".join(blocks))
     print(f"wrote narration.txt and captions.srt ({n} captions, combined {C.combined_duration():.2f}s)")
+    write_heygen()
+
+
+HEYGEN_NAMES = {
+    "00_want": "What the CFO wants",
+    "01_promise": "The promise",
+    "02_growth": "A faster yes",
+    "03_revenue": "No surprises",
+    "04_margin": "Caught in the draft",
+    "05_data": "Backed by data",
+    "06_how": "How AI fits in",
+    "07_close": "Close",
+}
+
+
+def write_heygen():
+    """A HeyGen-ready script: one block per scene, with pauses that match the video's timing."""
+    def mmss(t):
+        m, s = divmod(t, 60)
+        return f"{int(m)}:{s:04.1f}"
+
+    offsets, keys = C.scene_offsets(), C.SCENE_ORDER
+    # Speech fills each scene; the gap to the next scene's first word is
+    # the 1 s padding minus the 0.5 s cross-fade.
+    gap = C.PADDING_SECONDS - C.CROSSFADE_SECONDS
+    brk = f'<break time="{gap:g}s"/>'
+    speech_total = sum(C.sentence_seconds(x) for k in keys for p in C.NARRATION[k] for x in p)
+
+    out = [
+        "HEYGEN SCRIPT: Supplier Intelligence Hub (v4)",
+        "",
+        f"Target pace: {C.WORDS_PER_SECOND * 60:g} words per minute. Total speech {speech_total:.1f}s, "
+        f"video {C.combined_duration():.1f}s.",
+        f'Pauses use HeyGen break tags. If your editor shows {brk} as text, delete it and use the',
+        f"editor's pause button with the same length ({gap:g} seconds).",
+        "",
+        "=" * 72,
+        "OPTION A: ONE SCENE. Paste this whole block into a single HeyGen scene.",
+        "=" * 72,
+        "",
+    ]
+    paras = []
+    for i, k in enumerate(keys):
+        text = " ".join(x for p in C.NARRATION[k] for x in p)
+        paras.append(text + ("" if i == len(keys) - 1 else f" {brk}"))
+    out += ["\n\n".join(paras), ""]
+
+    out += [
+        "=" * 72,
+        "OPTION B: EIGHT SCENES. One HeyGen scene per video scene (best sync).",
+        "Use output/<scene>.mp4 as each scene's background if you want the avatar over the animation.",
+        f"Each scene ends with a {C.PADDING_SECONDS:g} second break so the scene runs as long as its MP4.",
+        "=" * 72,
+        "",
+    ]
+    for i, k in enumerate(keys):
+        sentences = [x for p in C.NARRATION[k] for x in p]
+        speech = sum(C.sentence_seconds(x) for x in sentences)
+        start = offsets[k]
+        out.append(f"SCENE {i + 1} of {len(keys)}: {HEYGEN_NAMES[k]}  |  file {k}.mp4  |  "
+                   f"starts {mmss(start)} in the combined video  |  speech {speech:.1f}s of {C.scene_duration(k):.1f}s")
+        out.append(" ".join(sentences) + f' <break time="{C.PADDING_SECONDS:g}s"/>')
+        out.append("")
+        out.append("  Cue sheet (each line should start at this time in the combined video):")
+        for t0, _, x in C.sentence_timeline(k):
+            out.append(f"    {mmss(start + t0)}  {x}")
+        out.append("")
+
+    out += [
+        "=" * 72,
+        "HOW TO KEEP IT IN SYNC",
+        "=" * 72,
+        f"1. Pick a calm, measured voice and set speed so Option A runs about {speech_total + gap * (len(keys) - 1):.0f} seconds",
+        "   (speech plus pauses). Faster than that and the voice gets ahead of the visuals.",
+        "2. Spot-check three cues against the cue sheet: the first line of Scene 3, the line",
+        "   \"No source, no number.\" and the final \"Backed by data.\" Within half a second is fine.",
+        "3. If the voice drifts, nudge the HeyGen speed slider, or lengthen the break tags slightly.",
+        "4. For exact sync, use Option B: each scene's audio starts at 0:00 on its own MP4, so drift",
+        "   can never build up across scenes.",
+        "5. Read numbers as written: \"40,000 dollars\", \"85 percent\", \"120 days\". Keep \"CFO\" as letters.",
+    ]
+    (OUT / "heygen_script.txt").write_text("\n".join(out) + "\n")
+    print("wrote heygen_script.txt")
 
 
 def stills(dest):

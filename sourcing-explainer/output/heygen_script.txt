@@ -1,0 +1,123 @@
+HEYGEN SCRIPT: Supplier Intelligence Hub (v4)
+
+Target pace: 150 words per minute. Total speech 120.0s, video 124.5s.
+Pauses use HeyGen break tags. If your editor shows <break time="0.5s"/> as text, delete it and use the
+editor's pause button with the same length (0.5 seconds).
+
+========================================================================
+OPTION A: ONE SCENE. Paste this whole block into a single HeyGen scene.
+========================================================================
+
+Every CFO wants two things. No surprises. And spend that moves the business forward. <break time="0.5s"/>
+
+So here is the promise: no surprises, faster yeses, and every yes backed by data. <break time="0.5s"/>
+
+First, a faster yes. A product team needs Vendor Y, a fictional data partner, to launch. A typical sourcing cycle takes 12 weeks. With reviews and a shortlist ready before the ask, it takes 4 weeks. The launch ships 8 weeks earlier. That is 8 more weeks of revenue. <break time="0.5s"/>
+
+Next, no surprises. Vendor Z, also fictional, supports ad delivery. Usage is at 85 percent of capacity. The vendor was just acquired. Peak season is 120 days out. Alone, each signal is noise. Together, they say act now. The team locks in capacity and a backup before the peak. <break time="0.5s"/>
+
+And no leakage. Vendor X's renewal draft raises the price cap from 2 percent to 6 percent. On 1 million dollars of spend, that is 40,000 dollars a year, caught in the draft, not on the invoice. The move: restore the 2 percent cap before renewal. <break time="0.5s"/>
+
+Every yes is backed by data. Each number links to the record it came from. The cycle time comes from the sourcing log. The capacity risk comes from usage data. The 40,000 dollars comes from the contract draft. No source, no number. <break time="0.5s"/>
+
+Here is how AI fits in. One portfolio holds more than 150 vendors, with signals across five systems. No person can watch them all. AI agents read every contract, renewal, review, and news item. They score each signal and cite the source. They draft the brief and the next move. A person makes the call. <break time="0.5s"/>
+
+I built the Supplier Intelligence Hub for one reason. So when the CFO asks, did we see this coming, the answer is yes. No surprises. Faster yeses. Backed by data.
+
+========================================================================
+OPTION B: EIGHT SCENES. One HeyGen scene per video scene (best sync).
+Use output/<scene>.mp4 as each scene's background if you want the avatar over the animation.
+Each scene ends with a 1 second break so the scene runs as long as its MP4.
+========================================================================
+
+SCENE 1 of 8: What the CFO wants  |  file 00_want.mp4  |  starts 0:00.0 in the combined video  |  speech 5.6s of 6.6s
+Every CFO wants two things. No surprises. And spend that moves the business forward. <break time="1s"/>
+
+  Cue sheet (each line should start at this time in the combined video):
+    0:00.0  Every CFO wants two things.
+    0:02.0  No surprises.
+    0:02.8  And spend that moves the business forward.
+
+SCENE 2 of 8: The promise  |  file 01_promise.mp4  |  starts 0:06.1 in the combined video  |  speech 6.0s of 7.0s
+So here is the promise: no surprises, faster yeses, and every yes backed by data. <break time="1s"/>
+
+  Cue sheet (each line should start at this time in the combined video):
+    0:06.1  So here is the promise: no surprises, faster yeses, and every yes backed by data.
+
+SCENE 3 of 8: A faster yes  |  file 02_growth.mp4  |  starts 0:12.6 in the combined video  |  speech 19.6s of 20.6s
+First, a faster yes. A product team needs Vendor Y, a fictional data partner, to launch. A typical sourcing cycle takes 12 weeks. With reviews and a shortlist ready before the ask, it takes 4 weeks. The launch ships 8 weeks earlier. That is 8 more weeks of revenue. <break time="1s"/>
+
+  Cue sheet (each line should start at this time in the combined video):
+    0:12.6  First, a faster yes.
+    0:14.2  A product team needs Vendor Y, a fictional data partner, to launch.
+    0:19.0  A typical sourcing cycle takes 12 weeks.
+    0:21.8  With reviews and a shortlist ready before the ask, it takes 4 weeks.
+    0:27.0  The launch ships 8 weeks earlier.
+    0:29.4  That is 8 more weeks of revenue.
+
+SCENE 4 of 8: No surprises  |  file 03_revenue.mp4  |  starts 0:32.7 in the combined video  |  speech 19.6s of 20.6s
+Next, no surprises. Vendor Z, also fictional, supports ad delivery. Usage is at 85 percent of capacity. The vendor was just acquired. Peak season is 120 days out. Alone, each signal is noise. Together, they say act now. The team locks in capacity and a backup before the peak. <break time="1s"/>
+
+  Cue sheet (each line should start at this time in the combined video):
+    0:32.7  Next, no surprises.
+    0:33.9  Vendor Z, also fictional, supports ad delivery.
+    0:36.7  Usage is at 85 percent of capacity.
+    0:39.5  The vendor was just acquired.
+    0:41.5  Peak season is 120 days out.
+    0:43.9  Alone, each signal is noise.
+    0:45.9  Together, they say act now.
+    0:47.9  The team locks in capacity and a backup before the peak.
+
+SCENE 5 of 8: Caught in the draft  |  file 04_margin.mp4  |  starts 0:52.8 in the combined video  |  speech 18.4s of 19.4s
+And no leakage. Vendor X's renewal draft raises the price cap from 2 percent to 6 percent. On 1 million dollars of spend, that is 40,000 dollars a year, caught in the draft, not on the invoice. The move: restore the 2 percent cap before renewal. <break time="1s"/>
+
+  Cue sheet (each line should start at this time in the combined video):
+    0:52.8  And no leakage.
+    0:54.0  Vendor X's renewal draft raises the price cap from 2 percent to 6 percent.
+    0:59.6  On 1 million dollars of spend, that is 40,000 dollars a year, caught in the draft, not on the invoice.
+    1:07.6  The move: restore the 2 percent cap before renewal.
+
+SCENE 6 of 8: Backed by data  |  file 05_data.mp4  |  starts 1:11.7 in the combined video  |  speech 16.8s of 17.8s
+Every yes is backed by data. Each number links to the record it came from. The cycle time comes from the sourcing log. The capacity risk comes from usage data. The 40,000 dollars comes from the contract draft. No source, no number. <break time="1s"/>
+
+  Cue sheet (each line should start at this time in the combined video):
+    1:11.7  Every yes is backed by data.
+    1:14.1  Each number links to the record it came from.
+    1:17.7  The cycle time comes from the sourcing log.
+    1:20.9  The capacity risk comes from usage data.
+    1:23.7  The 40,000 dollars comes from the contract draft.
+    1:26.9  No source, no number.
+
+SCENE 7 of 8: How AI fits in  |  file 06_how.mp4  |  starts 1:29.0 in the combined video  |  speech 22.0s of 23.0s
+Here is how AI fits in. One portfolio holds more than 150 vendors, with signals across five systems. No person can watch them all. AI agents read every contract, renewal, review, and news item. They score each signal and cite the source. They draft the brief and the next move. A person makes the call. <break time="1s"/>
+
+  Cue sheet (each line should start at this time in the combined video):
+    1:29.0  Here is how AI fits in.
+    1:31.4  One portfolio holds more than 150 vendors, with signals across five systems.
+    1:36.2  No person can watch them all.
+    1:38.6  AI agents read every contract, renewal, review, and news item.
+    1:42.6  They score each signal and cite the source.
+    1:45.8  They draft the brief and the next move.
+    1:49.0  A person makes the call.
+
+SCENE 8 of 8: Close  |  file 07_close.mp4  |  starts 1:51.5 in the combined video  |  speech 12.0s of 13.0s
+I built the Supplier Intelligence Hub for one reason. So when the CFO asks, did we see this coming, the answer is yes. No surprises. Faster yeses. Backed by data. <break time="1s"/>
+
+  Cue sheet (each line should start at this time in the combined video):
+    1:51.5  I built the Supplier Intelligence Hub for one reason.
+    1:55.1  So when the CFO asks, did we see this coming, the answer is yes.
+    2:00.7  No surprises.
+    2:01.5  Faster yeses.
+    2:02.3  Backed by data.
+
+========================================================================
+HOW TO KEEP IT IN SYNC
+========================================================================
+1. Pick a calm, measured voice and set speed so Option A runs about 124 seconds
+   (speech plus pauses). Faster than that and the voice gets ahead of the visuals.
+2. Spot-check three cues against the cue sheet: the first line of Scene 3, the line
+   "No source, no number." and the final "Backed by data." Within half a second is fine.
+3. If the voice drifts, nudge the HeyGen speed slider, or lengthen the break tags slightly.
+4. For exact sync, use Option B: each scene's audio starts at 0:00 on its own MP4, so drift
+   can never build up across scenes.
+5. Read numbers as written: "40,000 dollars", "85 percent", "120 days". Keep "CFO" as letters.
