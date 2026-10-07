@@ -6,7 +6,7 @@ A silent, 8 scene explainer (1:53) built with Manim Community Edition. The story
 
 | File | What it holds |
 |---|---|
-| `config.py` | Palette, fonts, narration (one list of sentences per scene part), timing math, Scene 4 numbers and asserts |
+| `config.py` | Palette, fonts, narration (one list of sentences per scene part), timing math, example numbers and asserts |
 | `common.py` | Shared base scene: background, top-left title, corner badge, beat clock, automatic text overlap and off-screen check |
 | `scenes.py` | The 8 scene classes |
 | `build.py` | Renders scenes, splits any multi-part scene, joins with cross-fades, writes `narration.txt` and `captions.srt`, extracts still frames, checks for em dashes |
