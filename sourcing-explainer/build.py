@@ -20,18 +20,17 @@ MEDIA = ROOT / "build" / "media"
 MANIM = ROOT / ".venv" / "bin" / "manim"
 
 CLASSES = {
-    "00_title": "S00Title",
-    "01_vendors": "S01Vendors",
-    "02_flow": "S02Flow",
-    "03_posture": "S03Posture",
-    "04_dollars": "S04Dollars",
-    "05_speed": "S05Speed",
-    "06_corner": "S06Corner",
-    "07_agents": "S07Agents",
-    "08_levers": "S08Levers",
-    "09_ahead": "S09Ahead",
+    "00_hook": "S00Hook",
+    "01_built": "S01Built",
+    "02_growth": "S02Growth",
+    "03_revenue": "S03Revenue",
+    "04_margin": "S04Margin",
+    "05_how": "S05How",
+    "06_rules": "S06Rules",
+    "07_close": "S07Close",
 }
-SCENE_LABELS = {k: f"Scene {int(k[:2])}, " + (C.SCENE_TITLES[k] or "title card") for k in CLASSES}
+SCENE_LABELS = {k: f"Scene {int(k[:2])}, " + (C.SCENE_TITLES[k] or {"00_hook": "hook"}.get(k, "title card"))
+                for k in CLASSES}
 ENC = ["-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "16", "-preset", "medium", "-an"]
 
 
@@ -67,11 +66,17 @@ def check_durations(dest):
     return report
 
 
-def split_scene4(dest):
-    src = dest / "04_dollars.mp4"
-    cut = C.part_duration(C.NARRATION["04_dollars"][0])
-    sh(["ffmpeg", "-y", "-v", "error", "-i", src, "-t", f"{cut:.3f}", *ENC, dest / "04a_dollars_part1.mp4"])
-    sh(["ffmpeg", "-y", "-v", "error", "-ss", f"{cut:.3f}", "-i", src, *ENC, dest / "04b_dollars_part2.mp4"])
+def split_parts(dest):
+    """Export each part of a multi-part scene as its own timed clip."""
+    for key, parts in C.NARRATION.items():
+        if len(parts) < 2:
+            continue
+        t = 0.0
+        for i, part in enumerate(parts):
+            d = C.part_duration(part)
+            sh(["ffmpeg", "-y", "-v", "error", "-ss", f"{t:.3f}", "-i", dest / f"{key}.mp4",
+                "-t", f"{d:.3f}", *ENC, dest / f"{key}_part{i + 1}.mp4"])
+            t += d
 
 
 def combine(dest):
@@ -124,8 +129,6 @@ def stills(dest):
     sdir = dest / "stills"
     sdir.mkdir(exist_ok=True)
     targets = [(k, dest / f"{k}.mp4") for k in C.SCENE_ORDER]
-    if (dest / "04a_dollars_part1.mp4").exists():
-        targets.insert(5, ("04a_dollars_part1", dest / "04a_dollars_part1.mp4"))
     for name, f in targets:
         t = max(probe_duration(f) - 0.3, 0)
         sh(["ffmpeg", "-y", "-v", "error", "-ss", f"{t:.3f}", "-i", f, "-frames:v", "1", sdir / f"{name}.png"])
@@ -154,7 +157,7 @@ if __name__ == "__main__":
         dest = render(mode)
         check_durations(dest)
         if mode == "final":
-            split_scene4(dest)
+            split_parts(dest)
             combine(dest)
             print(f"combined: planned {C.combined_duration():.2f}s, "
                   f"actual {probe_duration(dest / 'explainer_combined.mp4'):.3f}s")

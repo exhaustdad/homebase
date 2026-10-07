@@ -1,191 +1,143 @@
 1
-00:00:00,000 --> 00:00:04,000
-From vendor noise to sourcing decisions: the Supplier Intelligence Hub.
+00:00:00,000 --> 00:00:02,400
+Most people think sourcing saves money.
 
 2
-00:00:04,500 --> 00:00:08,100
-One sourcing portfolio can hold more than 150 vendors.
+00:00:02,400 --> 00:00:04,000
+Great sourcing makes money.
 
 3
-00:00:08,100 --> 00:00:10,100
-Each dot is one vendor.
+00:00:04,000 --> 00:00:06,400
+Here is what that looks like.
 
 4
-00:00:10,100 --> 00:00:11,700
-Some need action now.
+00:00:06,900 --> 00:00:13,300
+I built the Supplier Intelligence Hub, an AI system that turns vendor noise into business decisions.
 
 5
-00:00:11,700 --> 00:00:14,500
-But the signals live in separate systems.
+00:00:13,800 --> 00:00:15,000
+Start with growth.
 
 6
-00:00:14,500 --> 00:00:16,900
-No one can watch them all.
+00:00:15,000 --> 00:00:19,800
+A product team needs Vendor Y, a fictional data partner, to launch.
 
 7
-00:00:17,400 --> 00:00:21,400
-The Supplier Intelligence Hub pulls these signals into one flow.
+00:00:19,800 --> 00:00:22,600
+A typical sourcing cycle takes 12 weeks.
 
 8
-00:00:21,400 --> 00:00:24,200
-A weekly brief gives the full picture.
+00:00:22,600 --> 00:00:27,800
+With reviews and a shortlist already in the hub, it takes 4 weeks.
 
 9
-00:00:24,200 --> 00:00:27,000
-An always-on early warning catches sudden changes.
+00:00:27,800 --> 00:00:30,200
+The launch ships 8 weeks earlier.
 
 10
-00:00:27,000 --> 00:00:29,000
-Both land in one place.
+00:00:30,200 --> 00:00:33,000
+That is 8 more weeks of revenue.
 
 11
-00:00:29,500 --> 00:00:35,500
-Every signal gets a posture, and each posture tells the team what to do next.
+00:00:33,500 --> 00:00:34,300
+Then revenue.
 
 12
-00:00:35,500 --> 00:00:36,700
-Take Vendor X.
+00:00:34,300 --> 00:00:37,100
+Vendor Z, also fictional, supports ad delivery.
 
 13
-00:00:36,700 --> 00:00:41,500
-It renews in 90 days, and the draft raises the price cap.
+00:00:37,100 --> 00:00:39,900
+Usage is at 85 percent of capacity.
 
 14
-00:00:41,500 --> 00:00:43,100
-The posture: Increase Leverage.
+00:00:39,900 --> 00:00:41,900
+The vendor was just acquired.
 
 15
-00:00:43,100 --> 00:00:44,700
-Use timing and options.
+00:00:41,900 --> 00:00:44,300
+Peak season is 120 days out.
 
 16
-00:00:45,200 --> 00:00:47,600
-Here is what that is worth.
+00:00:44,300 --> 00:00:46,300
+Alone, each signal is noise.
 
 17
-00:00:47,600 --> 00:00:51,200
-Vendor X is fictional, and all numbers are illustrative.
+00:00:46,300 --> 00:00:48,300
+Together, they say act now.
 
 18
-00:00:51,200 --> 00:00:54,400
-Vendor X costs 1 million dollars a year.
+00:00:48,300 --> 00:00:52,700
+The team locks in capacity and a backup before the peak.
 
 19
-00:00:54,400 --> 00:00:59,600
-The old cap on yearly increases was 2 percent: at most 20,000 dollars.
+00:00:53,200 --> 00:00:54,400
+And yes, margin.
 
 20
-00:00:59,600 --> 00:01:03,600
-The draft cap is 6 percent: at most 60,000 dollars.
+00:00:54,400 --> 00:01:00,000
+Vendor X's renewal draft raises the price cap from 2 percent to 6 percent.
 
 21
-00:01:04,600 --> 00:01:08,200
-That is 40,000 dollars of added exposure every year.
+00:01:00,000 --> 00:01:04,800
+On 1 million dollars of spend, that is 40,000 dollars a year.
 
 22
-00:01:08,200 --> 00:01:11,800
+00:01:04,800 --> 00:01:08,400
 The move: restore the 2 percent cap before renewal.
 
 23
-00:01:12,300 --> 00:01:14,700
-Savings are only half the story.
+00:01:08,900 --> 00:01:11,300
+Here is how AI fits in.
 
 24
-00:01:14,700 --> 00:01:15,900
-Speed is revenue.
+00:01:11,300 --> 00:01:16,500
+One portfolio holds more than 150 vendors, with signals spread across five systems.
 
 25
-00:01:15,900 --> 00:01:20,700
-A product team needs Vendor Y, a fictional data partner, to launch.
+00:01:16,500 --> 00:01:18,900
+No person can watch them all.
 
 26
-00:01:20,700 --> 00:01:23,500
-A typical sourcing cycle takes 12 weeks.
+00:01:18,900 --> 00:01:22,900
+AI agents read every contract, renewal, review, and news item.
 
 27
-00:01:23,500 --> 00:01:28,700
-With reviews and a shortlist already in the hub, it takes 4 weeks.
+00:01:22,900 --> 00:01:26,100
+They score each signal and assign a posture.
 
 28
-00:01:28,700 --> 00:01:31,100
-The launch ships 8 weeks earlier.
+00:01:26,100 --> 00:01:29,300
+They draft the brief and the next move.
 
 29
-00:01:31,100 --> 00:01:33,900
-That is 8 more weeks of revenue.
+00:01:29,300 --> 00:01:31,300
+A person makes the call.
 
 30
-00:01:34,400 --> 00:01:36,400
-Now look around the corner.
+00:01:31,800 --> 00:01:33,800
+Three rules make it work.
 
 31
-00:01:36,400 --> 00:01:39,200
-Vendor Z, also fictional, supports ad delivery.
+00:01:33,800 --> 00:01:37,400
+AI does the reading, and people make the decisions.
 
 32
-00:01:39,200 --> 00:01:42,000
-Usage is at 85 percent of capacity.
+00:01:37,400 --> 00:01:40,200
+Every number traces back to a source.
 
 33
-00:01:42,000 --> 00:01:44,000
-The vendor was just acquired.
+00:01:40,200 --> 00:01:44,200
+And it runs in Slack, where the team already works.
 
 34
-00:01:44,000 --> 00:01:46,400
-Peak season is 120 days out.
+00:01:44,700 --> 00:01:48,300
+That is the shift, from reacting to seeing ahead.
 
 35
-00:01:46,400 --> 00:01:48,400
-Each signal alone is noise.
+00:01:48,300 --> 00:01:50,300
+Sourcing becomes a growth function.
 
 36
-00:01:48,400 --> 00:01:50,400
-Together, they say act now.
-
-37
-00:01:50,400 --> 00:01:54,800
-The team locks in capacity and a backup before the peak.
-
-38
-00:01:54,800 --> 00:01:56,400
-Peak revenue is protected.
-
-39
-00:01:56,900 --> 00:02:00,500
-Behind it, six agents work in one Slack hub.
-
-40
-00:02:00,500 --> 00:02:06,100
-Each has one job: briefs, risk checks, deal support, spend views, and waste checks.
-
-41
-00:02:06,600 --> 00:02:08,200
-Three levers, one hub.
-
-42
-00:02:08,200 --> 00:02:10,600
-Protect margin: 40,000 dollars a year.
-
-43
-00:02:10,600 --> 00:02:13,000
-Speed growth: launches 8 weeks sooner.
-
-44
-00:02:13,000 --> 00:02:15,400
-Protect revenue: 120 days of warning.
-
-45
-00:02:15,900 --> 00:02:18,700
-Today the hub tells us what happened.
-
-46
-00:02:18,700 --> 00:02:25,500
-Next, it tells us what is coming: the renewal, the risk, and the opportunity, before they arrive.
-
-47
-00:02:25,500 --> 00:02:27,900
-Early sight buys time to act.
-
-48
-00:02:27,900 --> 00:02:29,900
+00:01:50,300 --> 00:01:52,300
 Early action drives the business.

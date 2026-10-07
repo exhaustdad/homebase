@@ -35,94 +35,72 @@ FPS_FINAL = 30
 VENDOR_Z_ROLE = "ad delivery"
 
 # Narration. Each scene is a list of parts; each part is a list of sentences.
-# Only Scene 4 has two parts.
+# Story order: value first (hook, growth, revenue, margin), then how AI fits in.
 NARRATION = {
-    "00_title": [[
-        "From vendor noise to sourcing decisions: the Supplier Intelligence Hub.",
+    "00_hook": [[
+        "Most people think sourcing saves money.",
+        "Great sourcing makes money.",
+        "Here is what that looks like.",
     ]],
-    "01_vendors": [[
-        "One sourcing portfolio can hold more than 150 vendors.",
-        "Each dot is one vendor.",
-        "Some need action now.",
-        "But the signals live in separate systems.",
-        "No one can watch them all.",
+    "01_built": [[
+        "I built the Supplier Intelligence Hub, an AI system that turns vendor noise into business decisions.",
     ]],
-    "02_flow": [[
-        "The Supplier Intelligence Hub pulls these signals into one flow.",
-        "A weekly brief gives the full picture.",
-        "An always-on early warning catches sudden changes.",
-        "Both land in one place.",
-    ]],
-    "03_posture": [[
-        "Every signal gets a posture, and each posture tells the team what to do next.",
-        "Take Vendor X.",
-        "It renews in 90 days, and the draft raises the price cap.",
-        "The posture: Increase Leverage.",
-        "Use timing and options.",
-    ]],
-    "04_dollars": [
-        [
-            "Here is what that is worth.",
-            "Vendor X is fictional, and all numbers are illustrative.",
-            "Vendor X costs 1 million dollars a year.",
-            "The old cap on yearly increases was 2 percent: at most 20,000 dollars.",
-            "The draft cap is 6 percent: at most 60,000 dollars.",
-        ],
-        [
-            "That is 40,000 dollars of added exposure every year.",
-            "The move: restore the 2 percent cap before renewal.",
-        ],
-    ],
-    "05_speed": [[
-        "Savings are only half the story.",
-        "Speed is revenue.",
+    "02_growth": [[
+        "Start with growth.",
         "A product team needs Vendor Y, a fictional data partner, to launch.",
         "A typical sourcing cycle takes 12 weeks.",
         "With reviews and a shortlist already in the hub, it takes 4 weeks.",
         "The launch ships 8 weeks earlier.",
         "That is 8 more weeks of revenue.",
     ]],
-    "06_corner": [[
-        "Now look around the corner.",
+    "03_revenue": [[
+        "Then revenue.",
         f"Vendor Z, also fictional, supports {VENDOR_Z_ROLE}.",
         "Usage is at 85 percent of capacity.",
         "The vendor was just acquired.",
         "Peak season is 120 days out.",
-        "Each signal alone is noise.",
+        "Alone, each signal is noise.",
         "Together, they say act now.",
         "The team locks in capacity and a backup before the peak.",
-        "Peak revenue is protected.",
     ]],
-    "07_agents": [[
-        "Behind it, six agents work in one Slack hub.",
-        "Each has one job: briefs, risk checks, deal support, spend views, and waste checks.",
+    "04_margin": [[
+        "And yes, margin.",
+        "Vendor X's renewal draft raises the price cap from 2 percent to 6 percent.",
+        "On 1 million dollars of spend, that is 40,000 dollars a year.",
+        "The move: restore the 2 percent cap before renewal.",
     ]],
-    "08_levers": [[
-        "Three levers, one hub.",
-        "Protect margin: 40,000 dollars a year.",
-        "Speed growth: launches 8 weeks sooner.",
-        "Protect revenue: 120 days of warning.",
+    "05_how": [[
+        "Here is how AI fits in.",
+        "One portfolio holds more than 150 vendors, with signals spread across five systems.",
+        "No person can watch them all.",
+        "AI agents read every contract, renewal, review, and news item.",
+        "They score each signal and assign a posture.",
+        "They draft the brief and the next move.",
+        "A person makes the call.",
     ]],
-    "09_ahead": [[
-        "Today the hub tells us what happened.",
-        "Next, it tells us what is coming: the renewal, the risk, and the opportunity, before they arrive.",
-        "Early sight buys time to act.",
+    "06_rules": [[
+        "Three rules make it work.",
+        "AI does the reading, and people make the decisions.",
+        "Every number traces back to a source.",
+        "And it runs in Slack, where the team already works.",
+    ]],
+    "07_close": [[
+        "That is the shift, from reacting to seeing ahead.",
+        "Sourcing becomes a growth function.",
         "Early action drives the business.",
     ]],
 }
 
 SCENE_ORDER = list(NARRATION.keys())
 SCENE_TITLES = {
-    "00_title": None,
-    "01_vendors": "Too many vendors, too many places",
-    "02_flow": "One flow, two speeds",
-    "03_posture": "Every signal gets a posture",
-    "04_dollars": "From signal to dollars",
-    "05_speed": "Speed is revenue",
-    "06_corner": "Looking around the corner",
-    "07_agents": "Six agents, one hub",
-    "08_levers": "Three levers, one hub",
-    "09_ahead": "From reacting to seeing ahead",
+    "00_hook": None,
+    "01_built": None,
+    "02_growth": "Speed is revenue",
+    "03_revenue": "Looking around the corner",
+    "04_margin": "From signal to dollars",
+    "05_how": "How AI fits in",
+    "06_rules": "Three rules",
+    "07_close": "From reacting to seeing ahead",
 }
 
 
@@ -174,18 +152,17 @@ def combined_duration():
     return total - CROSSFADE_SECONDS * (len(SCENE_ORDER) - 1)
 
 
-# Scene 1 data
+# Vendor portfolio (How AI fits in)
 GRID_COLS, GRID_ROWS = 15, 10
 VENDOR_COUNT = GRID_COLS * GRID_ROWS
 FLAGGED_GOLD, FLAGGED_CORAL = 12, 6
 FLAGGED = FLAGGED_GOLD + FLAGGED_CORAL
+SOURCES = ["Contracts", "Renewal dates", "Security reviews", "Usage data", "Market news"]
 assert VENDOR_COUNT == 150
 assert FLAGGED == 18
+assert len(SOURCES) == 5
 
-# Scene 3 data
-RENEWAL_DAYS = 90
-
-# Scene 4 math
+# Margin math (Vendor X)
 SPEND = 1000000
 OLD_CAP = 0.02
 NEW_CAP = 0.06
@@ -213,34 +190,24 @@ assert usd(SPEND) == "$1,000,000"
 assert usd(old_max) == "$20,000" and usd(new_max) == "$60,000" and usd(gap) == "$40,000"
 assert pct(OLD_CAP) == "2%" and pct(NEW_CAP) == "6%"
 
-# The narration must agree with the numbers on screen.
-_n4 = " ".join(NARRATION["04_dollars"][0] + NARRATION["04_dollars"][1])
-assert f"{int(old_max):,} dollars" in _n4
-assert f"{int(new_max):,} dollars" in _n4
-assert f"{int(gap):,} dollars" in _n4
-assert f"{round(OLD_CAP * 100)} percent" in _n4
-assert f"{round(NEW_CAP * 100)} percent" in _n4
-assert f"{SPEND // 1000000} million dollars" in _n4
-assert f"more than {VENDOR_COUNT} vendors" in NARRATION["01_vendors"][0][0]
-assert f"{RENEWAL_DAYS} days" in NARRATION["03_posture"][0][2]
-
-# Scene 5 data (weeks only, no revenue figure)
+# Growth data (Vendor Y), weeks only, no revenue figure
 TYPICAL_WEEKS = 12
 HUB_WEEKS = 4
 WEEKS_SAVED = TYPICAL_WEEKS - HUB_WEEKS
 assert WEEKS_SAVED == 8
-_n5 = " ".join(NARRATION["05_speed"][0])
-assert f"takes {TYPICAL_WEEKS} weeks" in _n5 and f"takes {HUB_WEEKS} weeks" in _n5
-assert f"{WEEKS_SAVED} weeks earlier" in _n5 and f"{WEEKS_SAVED} more weeks" in _n5
 
-# Scene 6 data
+# Revenue data (Vendor Z)
 USAGE = 0.85
 DAYS_TO_PEAK = 120
-_n6 = " ".join(NARRATION["06_corner"][0])
-assert f"{round(USAGE * 100)} percent" in _n6 and f"{DAYS_TO_PEAK} days" in _n6
 
-# Scene 8 pulls its numbers from Scenes 4 to 6
-_n8 = " ".join(NARRATION["08_levers"][0])
-assert f"{int(gap):,} dollars" in _n8
-assert f"{WEEKS_SAVED} weeks" in _n8
-assert f"{DAYS_TO_PEAK} days" in _n8
+# The narration must agree with the numbers on screen.
+_j = lambda k: " ".join(s for p in NARRATION[k] for s in p)
+_m, _g, _r, _h = _j("04_margin"), _j("02_growth"), _j("03_revenue"), _j("05_how")
+assert f"{int(gap):,} dollars" in _m
+assert f"{round(OLD_CAP * 100)} percent to {round(NEW_CAP * 100)} percent" in _m
+assert f"restore the {round(OLD_CAP * 100)} percent cap" in _m
+assert f"{SPEND // 1000000} million dollars" in _m
+assert f"takes {TYPICAL_WEEKS} weeks" in _g and f"takes {HUB_WEEKS} weeks" in _g
+assert f"{WEEKS_SAVED} weeks earlier" in _g and f"{WEEKS_SAVED} more weeks" in _g
+assert f"{round(USAGE * 100)} percent" in _r and f"{DAYS_TO_PEAK} days" in _r
+assert f"more than {VENDOR_COUNT} vendors" in _h and "five systems" in _h
