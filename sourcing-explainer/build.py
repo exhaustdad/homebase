@@ -20,10 +20,11 @@ from config import CROSSFADE, NARRATION, SCENE_HEADINGS, SCENE_ORDER, scene_timi
 
 HERE = Path(__file__).resolve().parent
 SCENE_CLASSES = {
-    "00_title": "TitleScene",
-    "01_signals": "SignalsScene",
-    "02_dollars": "DollarsScene",
-    "03_action": "ActionScene",
+    "01_board": "BoardScene",
+    "02_sort": "SortScene",
+    "03_dollars": "DollarsScene",
+    "04_plan": "PlanScene",
+    "05_ahead": "AheadScene",
 }
 QUALITY = {
     "preview": {"flags": ["-ql"], "folder": "480p15", "fps": 15},
@@ -141,7 +142,7 @@ def stills(paths, out_dir):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--preview", action="store_true", help="fast low-quality render")
-    ap.add_argument("--only", nargs="*", help="scene keys to render, for example 02_dollars")
+    ap.add_argument("--only", nargs="*", help="scene keys to render, for example 03_dollars")
     args = ap.parse_args()
 
     config.assert_data()

@@ -5,18 +5,21 @@ Every number shown on screen is defined here and checked by assert_data().
 
 import re
 
-# Palette
-BG = "#0E1422"
-PANEL = "#17213A"
-INK = "#E9EDF5"
-MUTED = "#8A96AD"
-LINE = "#2A3550"
-BLUE = "#5AA9E6"
-GOLD = "#F2C14E"
-CORAL = "#EF7A63"
-TEAL = "#56C3A5"
+# Palette: a warm pin board. Cards are white with soft shadows, and each
+# signal source has its own pastel so pins read as a board, not a chart.
+BG = "#F7F4EF"
+PANEL = "#FFFFFF"
+SHADOW = "#E4DDD2"
+INK = "#1B1B1F"
+MUTED = "#6F6A64"
+LINE = "#E3DDD4"
+RED = "#E60023"
+BLUE = "#3A7BD5"
+GOLD = "#E3A008"
+CORAL = "#E8634A"
+TEAL = "#1F9E89"
 
-# Fonts (installed system fonts; see README for fallbacks)
+# Fonts (installed system fonts; see README)
 SERIF = "Newsreader"
 SANS = "IBM Plex Sans"
 
@@ -32,31 +35,41 @@ CROSSFADE = 0.5
 
 # Narration. Each entry is one narration part; each part is a list of sentences.
 # A scene with more than one part gets padding per part and is also exported
-# as one file per part. Total runtime is about 30 seconds.
+# as one file per part. Total runtime is about one minute.
 NARRATION = {
-    "00_title": [[
-        "From vendor noise to sourcing decisions.",
+    "01_board": [[
+        "Every week, 150 vendors pin fresh signals to our sourcing board.",
+        "Contracts, renewals, security reviews, usage, market news.",
+        "It piles up fast, and the important ones get buried.",
     ]],
-    "01_signals": [[
-        "150 vendors, five systems, 18 needing action now.",
-        "The hub puts them in one Slack view, each with a posture.",
+    "02_sort": [[
+        "The Supplier Intelligence Hub reads every pin and sorts the board.",
+        "Most can wait.",
+        "18 need action now, and one of them is our fictional Vendor X.",
     ]],
-    "02_dollars": [[
-        "Vendor X's draft raises its price cap from 2 to 6 percent.",
-        "On 1 million of spend, that adds 40,000 dollars of yearly exposure.",
+    "03_dollars": [[
+        "Its renewal draft quietly lifts the price cap from 2 to 6 percent.",
+        "On 1 million dollars of spend, the ceiling jumps from 20,000 to 60,000.",
+        "That is 40,000 dollars a year.",
     ]],
-    "03_action": [[
-        "Flagged 90 days out, the team asks to restore the 2 percent cap.",
+    "04_plan": [[
+        "The hub tags it Increase Leverage, with 90 days left before renewal.",
+        "The team asks to restore the 2 percent cap and uses the time to compare options.",
+    ]],
+    "05_ahead": [[
+        "Caught early, a surprise cost becomes a negotiation.",
+        "Every week, the board gets sorted before it piles up, so nothing costly hides.",
         "Early action drives the business.",
     ]],
 }
 
 SCENE_ORDER = list(NARRATION.keys())
 SCENE_HEADINGS = {
-    "00_title": "Scene 0, title card",
-    "01_signals": "Scene 1, One view of every signal",
-    "02_dollars": "Scene 2, From signal to dollars",
-    "03_action": "Scene 3, Early sight, better terms",
+    "01_board": "Scene 1, Every week, a full board",
+    "02_sort": "Scene 2, From noise to priorities",
+    "03_dollars": "Scene 3, From a clause to dollars",
+    "04_plan": "Scene 4, From a deadline to a plan",
+    "05_ahead": "Scene 5, From reacting to seeing ahead",
 }
 
 
@@ -96,41 +109,36 @@ def scene_duration(key):
     return scene_timing(key)[0]
 
 
-# Scene 1: vendor grid
-GRID_COLS = 15
-GRID_ROWS = 10
-VENDOR_COUNT = GRID_COLS * GRID_ROWS
-FLAGGED = 18  # vendors that need action now
-SOURCES = ["Contracts", "Renewal dates", "Security reviews", "Usage data", "Market news"]
+# The board: one pin per vendor this week, colored by its source.
+VENDOR_COUNT = 150
+SOURCES = ["Contracts", "Renewals", "Security reviews", "Usage", "Market news"]
+SOURCE_COLORS = ["#F6C9C0", "#F7DFA6", "#C9DCF2", "#CFE8CF", "#E2D4F0"]
+BOARD_COLS = 15
+SEED = 11
 
-# Scene 2: postures; scene 4: the Vendor X call
-POSTURES = [
-    ("Protect Margin", "Hold price and terms"),
-    ("Increase Leverage", "Use timing and options"),
-    ("Reduce Hidden Risk", "Find gaps early"),
-    ("Improve Resilience", "Plan backups and exits"),
-]
+# How the hub sorts the board.
+FLAGGED = 18      # act now
+WATCH = 40
+ON_TRACK = VENDOR_COUNT - FLAGGED - WATCH
+LANES = [("Act now", FLAGGED, RED), ("Watch", WATCH, GOLD), ("On track", ON_TRACK, TEAL)]
+
+# The Vendor X call.
 VENDOR = "Vendor X"
 RENEWAL_DAYS = 90
 CHOSEN_POSTURE = "Increase Leverage"
+PLAN_STEPS = [  # (day on the timeline, step)
+    (8, "Ask to restore the 2% cap"),
+    (45, "Compare options"),
+    (82, "Decide before renewal"),
+]
 
-# Scene 3: the worked example
+# The worked example.
 SPEND = 1000000
 OLD_CAP = 0.02
 NEW_CAP = 0.06
 old_max = SPEND * OLD_CAP
 new_max = SPEND * NEW_CAP
 gap = new_max - old_max
-
-# Scene 2: agents
-AGENTS = [
-    ("Sourcing Signal", "Weekly brief"),
-    ("Category Brief", "Category view"),
-    ("Supplier Risk", "Risk checks"),
-    ("Deal Desk", "Deal support"),
-    ("Spend Pulse", "Spend view"),
-    ("Ghostbuster", "Waste checks"),
-]
 
 
 def money(x):
@@ -155,24 +163,25 @@ def assert_data():
 
     assert VENDOR_COUNT == 150
     assert FLAGGED == 18
-    assert len(SOURCES) == 5
-    assert len(POSTURES) == 4
-    assert CHOSEN_POSTURE in [p[0] for p in POSTURES]
-    assert len(AGENTS) == 6
+    assert ON_TRACK > 0 and FLAGGED + WATCH + ON_TRACK == VENDOR_COUNT
+    assert len(SOURCES) == len(SOURCE_COLORS) == 5
+    assert all(0 < d < RENEWAL_DAYS for d, _ in PLAN_STEPS)
+    assert f"restore the {pct(OLD_CAP)} cap" in PLAN_STEPS[0][1]
 
     # Spoken numbers must match the variables.
-    words = {5: "five"}
     n = {k: " ".join(s for part in v for s in part) for k, v in NARRATION.items()}
-    a = n["01_signals"]
-    assert f"{VENDOR_COUNT} vendors, {words[len(SOURCES)]} systems, {FLAGGED} needing action" in a
-    b = n["02_dollars"]
-    assert f"{VENDOR}'s draft" in b
-    assert f"from {round(OLD_CAP * 100)} to {round(NEW_CAP * 100)} percent" in b
-    assert f"On {SPEND // 1000000} million of spend" in b
-    assert f"{int(gap):,} dollars of yearly exposure" in b
-    c = n["03_action"]
-    assert f"Flagged {RENEWAL_DAYS} days out" in c
-    assert f"restore the {round(OLD_CAP * 100)} percent cap" in c
+    assert f"{VENDOR_COUNT} vendors" in n["01_board"]
+    assert f"{FLAGGED} need action now" in n["02_sort"]
+    assert VENDOR in n["02_sort"]
+    a = n["03_dollars"]
+    assert f"from {round(OLD_CAP * 100)} to {round(NEW_CAP * 100)} percent" in a
+    assert f"{SPEND // 1000000} million dollars of spend" in a
+    assert f"from {int(old_max):,} to {int(new_max):,}" in a
+    assert f"{int(gap):,} dollars a year" in a
+    b = n["04_plan"]
+    assert f"tags it {CHOSEN_POSTURE}" in b
+    assert f"{RENEWAL_DAYS} days left" in b
+    assert f"restore the {round(OLD_CAP * 100)} percent cap" in b
 
     # No em dash anywhere in narration.
     for parts in NARRATION.values():

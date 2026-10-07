@@ -1,27 +1,55 @@
 1
-00:00:00,500 --> 00:00:02,900
-From vendor noise to sourcing decisions.
+00:00:00,500 --> 00:00:04,900
+Every week, 150 vendors pin fresh signals to our sourcing board.
 
 2
-00:00:03,400 --> 00:00:06,600
-150 vendors, five systems, 18 needing action now.
+00:00:04,900 --> 00:00:07,700
+Contracts, renewals, security reviews, usage, market news.
 
 3
-00:00:06,600 --> 00:00:11,400
-The hub puts them in one Slack view, each with a posture.
+00:00:07,700 --> 00:00:11,700
+It piles up fast, and the important ones get buried.
 
 4
-00:00:11,900 --> 00:00:16,700
-Vendor X's draft raises its price cap from 2 to 6 percent.
+00:00:12,200 --> 00:00:16,600
+The Supplier Intelligence Hub reads every pin and sorts the board.
 
 5
-00:00:16,700 --> 00:00:21,500
-On 1 million of spend, that adds 40,000 dollars of yearly exposure.
+00:00:16,600 --> 00:00:17,800
+Most can wait.
 
 6
-00:00:22,000 --> 00:00:27,200
-Flagged 90 days out, the team asks to restore the 2 percent cap.
+00:00:17,800 --> 00:00:23,000
+18 need action now, and one of them is our fictional Vendor X.
 
 7
-00:00:27,200 --> 00:00:29,200
+00:00:23,500 --> 00:00:28,700
+Its renewal draft quietly lifts the price cap from 2 to 6 percent.
+
+8
+00:00:28,700 --> 00:00:33,900
+On 1 million dollars of spend, the ceiling jumps from 20,000 to 60,000.
+
+9
+00:00:33,900 --> 00:00:36,300
+That is 40,000 dollars a year.
+
+10
+00:00:36,800 --> 00:00:41,600
+The hub tags it Increase Leverage, with 90 days left before renewal.
+
+11
+00:00:41,600 --> 00:00:48,000
+The team asks to restore the 2 percent cap and uses the time to compare options.
+
+12
+00:00:48,500 --> 00:00:51,700
+Caught early, a surprise cost becomes a negotiation.
+
+13
+00:00:51,700 --> 00:00:57,300
+Every week, the board gets sorted before it piles up, so nothing costly hides.
+
+14
+00:00:57,300 --> 00:00:59,300
 Early action drives the business.
