@@ -1,7 +1,7 @@
 """Manim scenes for the sourcing explainer.
 
 Render with build.py, or directly:
-    manim -ql scenes.py ProblemScene
+    manim -ql scenes.py SignalsScene
 """
 
 import random
@@ -172,132 +172,69 @@ class TitleScene(ExplainerScene):
         self.finish()
 
 
-class ProblemScene(ExplainerScene):
-    KEY = "01_problem"
-    TITLE = "Too many vendors, too many places"
+class SignalsScene(ExplainerScene):
+    KEY = "01_signals"
+    TITLE = "One view of every signal"
 
     def construct(self):
+        y = -0.45
         dots = VGroup(*[
-            Dot(radius=0.075, color=MUTED, fill_opacity=0.55)
+            Dot(radius=0.055, color=MUTED, fill_opacity=0.55)
             for _ in range(GRID_COLS * GRID_ROWS)
         ])
-        dots.arrange_in_grid(rows=GRID_ROWS, cols=GRID_COLS, buff=0.25)
-        dots.move_to([-2.7, 0.05, 0])
+        dots.arrange_in_grid(rows=GRID_ROWS, cols=GRID_COLS, buff=0.14)
+        left_at(dots.move_to([0, y, 0]), -6.55)
         assert len(dots) == VENDOR_COUNT
-
         flagged = random.Random(7).sample(range(len(dots)), FLAGGED)
 
         def legend(color, label, opacity=1.0):
-            d = Dot(radius=0.075, color=color, fill_opacity=opacity)
-            t = sans(label, 21, INK)
-            return VGroup(d, t).arrange(RIGHT, buff=0.18)
+            d = Dot(radius=0.06, color=color, fill_opacity=opacity)
+            t = sans(label, 18, INK)
+            return VGroup(d, t).arrange(RIGHT, buff=0.15)
 
         all_key = legend(MUTED, f"{VENDOR_COUNT} vendors", 0.55)
         flag_key = legend(CORAL, f"{FLAGGED} need action now")
-        left_at(all_key.move_to([0, -2.25, 0]), dots.get_left()[0])
-        flag_key.move_to([0, -2.25, 0])
-        left_at(flag_key, all_key.get_right()[0] + 0.6)
+        keys = VGroup(all_key, flag_key).arrange(DOWN, buff=0.18, aligned_edge=LEFT)
+        keys.next_to(dots, DOWN, buff=0.35)
+        left_at(keys, -6.55)
 
-        chips = VGroup(*[chip(s, 3.1) for s in SOURCES]).arrange(DOWN, buff=0.22)
-        chips.move_to([4.55, 0.05, 0])
-        chips_label = sans(f"{len(SOURCES)} separate systems", 20, MUTED)
-        chips_label.next_to(chips, DOWN, buff=0.3)
+        chips = VGroup(*[chip(s, 2.2, 0.42, 17) for s in SOURCES]).arrange(DOWN, buff=0.1)
+        chips.move_to([-1.2, y, 0])
+        chips_label = sans(f"{len(SOURCES)} systems", 17, MUTED).next_to(chips, DOWN, buff=0.3)
 
-        warning = sans("No single view of all signals.", 30, CORAL, weight="MEDIUM")
-        warning.move_to([0, -3.2, 0])
-
-        self.at(0)
-        self.play(LaggedStart(*[FadeIn(d, scale=0.5) for d in dots], lag_ratio=0.01),
-                  FadeIn(all_key), run_time=1.8)
-        self.play(LaggedStart(*[FadeIn(c, shift=LEFT * 0.2) for c in chips], lag_ratio=0.2),
-                  FadeIn(chips_label), run_time=1.5)
-
-        self.at(1)
-        self.play(*[dots[i].animate.set_fill(CORAL, opacity=1).scale(1.4) for i in flagged],
-                  FadeIn(flag_key), run_time=1.0)
-
-        self.at(2)
-        self.play(FadeIn(warning, shift=UP * 0.1), run_time=0.9)
-        self.finish()
-
-
-class FlowScene(ExplainerScene):
-    KEY = "02_flow"
-    TITLE = "One flow, four postures"
-
-    def construct(self):
-        flow_y = 0.8
-        chips = VGroup(*[chip(s, 2.55, 0.46, 19) for s in SOURCES]).arrange(DOWN, buff=0.13)
-        chips.move_to([-5.3, flow_y, 0])
-
-        bus_x = -3.75
+        hub = labeled_box("Slack hub", f"{len(AGENTS)} agents", 2.0, 1.0, GOLD, 22, 17)
+        hub.move_to([1.6, y, 0])
         feeds = VGroup(*[
-            Line(c.get_right(), [bus_x, c.get_y(), 0], color=MUTED, stroke_width=2.5) for c in chips
+            arrow(c.get_right(), hub.get_left() + UP * (0.3 - 0.15 * i)) for i, c in enumerate(chips)
         ])
-        bus = Line([bus_x, chips[0].get_y(), 0], [bus_x, chips[-1].get_y(), 0], color=MUTED, stroke_width=2.5)
 
-        weekly = labeled_box("Weekly brief", "The full picture", 2.9, 1.0, BLUE, 23, 18)
-        warn = labeled_box("Early warning", "Always on", 2.9, 1.0, CORAL, 23, 18)
-        weekly.move_to([-1.35, flow_y + 0.72, 0])
-        warn.move_to([-1.35, flow_y - 0.72, 0])
-        a_weekly = arrow([bus_x, weekly.get_y(), 0], weekly.get_left())
-        a_warn = arrow([bus_x, warn.get_y(), 0], warn.get_left())
-
-        hub = labeled_box("Slack hub", f"{len(AGENTS)} agents", 2.5, 1.1, GOLD, 24, 18)
-        hub.move_to([2.15, flow_y, 0])
-        a_w_hub = arrow(weekly.get_right(), hub.get_left() + UP * 0.22)
-        a_e_hub = arrow(warn.get_right(), hub.get_left() + DOWN * 0.22)
-
-        names = VGroup(*[sans(n, 18, INK) for n, _ in AGENTS])
-        names.arrange(DOWN, buff=0.16, aligned_edge=LEFT)
-        names.move_to([0, flow_y, 0])
-        left_at(names, 4.75)
+        postures = VGroup(*[chip(p, 2.75, 0.5, 18) for p, _ in POSTURES]).arrange(DOWN, buff=0.16)
+        postures.move_to([0, y, 0])
+        left_at(postures, 3.75)
         spokes = VGroup(*[
-            Line(hub.get_right(), [n.get_left()[0] - 0.12, n.get_y(), 0], color=LINE, stroke_width=2.5)
-            for n in names
+            Line(hub.get_right(), p.get_left(), color=GOLD, stroke_width=2.5) for p in postures
         ])
+        postures_label = sans(f"{len(POSTURES)} postures", 17, MUTED).next_to(postures, DOWN, buff=0.3)
 
-        tiles = []
-        for name, desc in POSTURES:
-            frame = box(3.1, 1.15)
-            head = sans(name, 21, INK, weight="MEDIUM")
-            sub = sans(desc, 17, MUTED)
-            stack([head, sub], frame.get_center(), gap=0.2)
-            tiles.append(VGroup(frame, head, sub))
-        tiles = VGroup(*tiles).arrange(RIGHT, buff=0.25).move_to([0, -2.55, 0])
-
-        drop_y = tiles.get_top()[1] + 0.32
-        drop = Line(hub.get_bottom(), [hub.get_x(), drop_y, 0], color=GOLD, stroke_width=2.5)
-        rail = Line([tiles[0].get_x(), drop_y, 0], [tiles[-1].get_x(), drop_y, 0], color=GOLD, stroke_width=2.5)
-        ticks = VGroup(*[
-            Line([t.get_x(), drop_y, 0], [t.get_x(), t.get_top()[1], 0], color=GOLD, stroke_width=2.5)
-            for t in tiles
-        ])
-
-        # Reads every source.
         self.at(0)
-        self.play(LaggedStart(*[FadeIn(c, shift=RIGHT * 0.15) for c in chips], lag_ratio=0.15), run_time=1.0)
-        self.play(Create(feeds), Create(bus), run_time=0.7)
+        self.play(LaggedStart(*[FadeIn(d, scale=0.5) for d in dots], lag_ratio=0.006),
+                  FadeIn(all_key), run_time=1.0)
+        self.play(*[dots[i].animate.set_fill(CORAL, opacity=1).scale(1.5) for i in flagged],
+                  FadeIn(flag_key), run_time=0.7)
+        self.play(LaggedStart(*[FadeIn(c, shift=LEFT * 0.15) for c in chips], lag_ratio=0.15),
+                  FadeIn(chips_label), run_time=0.8)
 
-        # Two speeds into one hub with six agents.
         self.at(1)
-        self.play(Create(a_weekly), Create(a_warn), run_time=0.6)
-        self.play(FadeIn(weekly), FadeIn(warn), run_time=0.7)
-        self.play(Create(a_w_hub), Create(a_e_hub), run_time=0.6)
-        self.play(FadeIn(hub), run_time=0.7)
-        self.play(LaggedStart(*[Create(l) for l in spokes], lag_ratio=0.12),
-                  LaggedStart(*[FadeIn(n) for n in names], lag_ratio=0.12), run_time=1.5)
-
-        # Four postures.
-        self.at(2)
-        self.play(Create(drop), run_time=0.5)
-        self.play(Create(rail), Create(ticks), run_time=0.6)
-        self.play(LaggedStart(*[FadeIn(t, shift=UP * 0.1) for t in tiles], lag_ratio=0.2), run_time=1.6)
+        self.play(Create(feeds), run_time=0.6)
+        self.play(FadeIn(hub), run_time=0.6)
+        self.play(Create(spokes),
+                  LaggedStart(*[FadeIn(p, shift=RIGHT * 0.15) for p in postures], lag_ratio=0.15),
+                  FadeIn(postures_label), run_time=1.2)
         self.finish()
 
 
 class DollarsScene(ExplainerScene):
-    KEY = "03_dollars"
+    KEY = "02_dollars"
     TITLE = "From signal to dollars"
 
     def construct(self):
@@ -344,35 +281,27 @@ class DollarsScene(ExplainerScene):
         note = sans("Annual view. Multi-year compounding is not shown.", 17, MUTED)
         note.next_to(gap_group, DOWN, buff=0.25).align_to(gap_box, LEFT)
 
-        # Fictional vendor: the badge lifts while the vendor is introduced.
+        # Fictional vendor; caps go from 2% to 6%.
         self.at(0)
         self.play(FadeIn(spend),
                   self.badge[0].animate.set_stroke(GOLD), self.badge[1].animate.set_color(INK),
-                  run_time=0.9)
-        self.at(0, offset=3.0)
-        self.play(self.badge[0].animate.set_stroke(LINE), self.badge[1].animate.set_color(MUTED), run_time=0.7)
+                  run_time=0.8)
+        self.play(FadeIn(old_label), GrowFromEdge(old_bar, LEFT), run_time=0.9)
+        self.play(FadeIn(new_label), GrowFromEdge(new_bar, LEFT),
+                  self.badge[0].animate.set_stroke(LINE), self.badge[1].animate.set_color(MUTED),
+                  run_time=1.2)
 
-        # Caps: 2% to 6%.
+        # Dollars and the gap.
         self.at(1)
-        self.play(FadeIn(old_label), GrowFromEdge(old_bar, LEFT), run_time=1.1)
-        self.play(FadeIn(new_label), GrowFromEdge(new_bar, LEFT), run_time=1.5)
-
-        # Dollar ceilings.
-        self.at(2)
-        self.play(FadeIn(old_val), FadeIn(old_f), run_time=0.8)
-        self.at(2, offset=2.0)
-        self.play(FadeIn(new_val), FadeIn(new_f), run_time=0.8)
-
-        # The gap.
-        self.at(3)
-        self.play(Create(gap_box), run_time=0.9)
-        self.play(FadeIn(gap_group), run_time=0.7)
-        self.play(FadeIn(note), run_time=0.5)
+        self.play(FadeIn(old_val), FadeIn(old_f), FadeIn(new_val), FadeIn(new_f), run_time=0.7)
+        self.play(Create(gap_box), run_time=0.7)
+        self.play(FadeIn(gap_group), run_time=0.6)
+        self.play(FadeIn(note), run_time=0.4)
         self.finish()
 
 
 class ActionScene(ExplainerScene):
-    KEY = "04_action"
+    KEY = "03_action"
     TITLE = "Early sight, better terms"
 
     def construct(self):
@@ -419,31 +348,23 @@ class ActionScene(ExplainerScene):
         final.move_to([0, -3.05, 0])
 
         self.at(0)
-        self.play(FadeIn(tag, shift=RIGHT * 0.15), FadeIn(posture), run_time=0.8)
-        self.at(0, offset=2.6)
-        self.play(FadeIn(action, shift=UP * 0.1), run_time=0.9)
-
-        # Flags arrive early.
-        self.at(1)
-        self.play(Create(track), FadeIn(start), FadeIn(end), run_time=0.8)
+        self.play(FadeIn(tag, shift=RIGHT * 0.15), FadeIn(posture), run_time=0.6)
+        self.play(FadeIn(action, shift=UP * 0.1), run_time=0.7)
+        self.play(Create(track), FadeIn(start), FadeIn(end), run_time=0.6)
         self.play(FadeIn(start_label), FadeIn(end_label),
-                  LaggedStart(*[FadeIn(k, shift=DOWN * 0.1) for k in kinds], lag_ratio=0.2), run_time=1.0)
+                  LaggedStart(*[FadeIn(k, shift=DOWN * 0.1) for k in kinds], lag_ratio=0.2), run_time=0.7)
+        self.play(GrowFromEdge(band, LEFT), run_time=0.9)
+        self.play(FadeIn(runway), run_time=0.4)
+        self.play(FadeIn(value), run_time=0.6)
 
-        # Time to negotiate, and what it is worth.
-        self.at(2)
-        self.play(GrowFromEdge(band, LEFT), run_time=1.2)
-        self.play(FadeIn(runway), run_time=0.5)
-        self.play(FadeIn(value), run_time=0.8)
-
-        self.at(3)
-        self.play(FadeIn(final, shift=UP * 0.1), run_time=1.0)
+        self.at(1)
+        self.play(FadeIn(final, shift=UP * 0.1), run_time=0.9)
         self.finish()
 
 
 SCENES = {
     "00_title": TitleScene,
-    "01_problem": ProblemScene,
-    "02_flow": FlowScene,
-    "03_dollars": DollarsScene,
-    "04_action": ActionScene,
+    "01_signals": SignalsScene,
+    "02_dollars": DollarsScene,
+    "03_action": ActionScene,
 }

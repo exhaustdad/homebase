@@ -3,57 +3,25 @@
 From vendor noise to sourcing decisions.
 
 2
-00:00:03,400 --> 00:00:07,800
-One portfolio holds 150 vendors, with signals in five separate systems.
+00:00:03,400 --> 00:00:06,600
+150 vendors, five systems, 18 needing action now.
 
 3
-00:00:07,800 --> 00:00:09,400
-18 need action now.
+00:00:06,600 --> 00:00:11,400
+The hub puts them in one Slack view, each with a posture.
 
 4
-00:00:09,400 --> 00:00:11,800
-No one can see them all.
+00:00:11,900 --> 00:00:16,700
+Vendor X's draft raises its price cap from 2 to 6 percent.
 
 5
-00:00:12,300 --> 00:00:14,300
-The hub reads every source.
+00:00:16,700 --> 00:00:21,500
+On 1 million of spend, that adds 40,000 dollars of yearly exposure.
 
 6
-00:00:14,300 --> 00:00:19,900
-A weekly brief and an always-on warning feed one Slack hub with six agents.
+00:00:22,000 --> 00:00:27,200
+Flagged 90 days out, the team asks to restore the 2 percent cap.
 
 7
-00:00:19,900 --> 00:00:25,100
-Every signal gets one of four postures that say what to do next.
-
-8
-00:00:25,600 --> 00:00:30,000
-Take Vendor X: fictional, with 1 million dollars of annual spend.
-
-9
-00:00:30,000 --> 00:00:34,800
-Its renewal draft raises the price cap from 2 to 6 percent.
-
-10
-00:00:34,800 --> 00:00:40,000
-The most it can add each year rises from 20,000 to 60,000 dollars.
-
-11
-00:00:40,000 --> 00:00:42,800
-That is 40,000 dollars of new exposure.
-
-12
-00:00:43,300 --> 00:00:50,100
-With 90 days to renewal, the posture is Increase Leverage: ask to restore the 2 percent cap.
-
-13
-00:00:50,100 --> 00:00:53,700
-The hub flags renewals, risks, and price changes early.
-
-14
-00:00:53,700 --> 00:00:57,300
-Early sight turns a surprise cost into a negotiation.
-
-15
-00:00:57,300 --> 00:00:59,300
+00:00:27,200 --> 00:00:29,200
 Early action drives the business.

@@ -1,6 +1,6 @@
 # Sourcing explainer video
 
-A silent, one-minute, 3Blue1Brown-style explainer of the Supplier Intelligence Hub,
+A silent, 30-second, 3Blue1Brown-style explainer of the Supplier Intelligence Hub,
 built with Manim Community Edition. It is aimed at CFO-org leadership and leads with
 business value: what a single missed renewal term costs, and what early sight buys. All data is synthetic and the vendor ("Vendor X") is fictional.
 Every scene carries the badge "Illustrative data only. Fictional vendor."
@@ -10,7 +10,7 @@ Every scene carries the badge "Illustrative data only. Fictional vendor."
 | File | What it holds |
 | --- | --- |
 | `config.py` | Palette, fonts, narration (one Python list per scene), timing rule, and every number shown on screen, with asserts |
-| `scenes.py` | The five Manim scenes and the shared base class (badge, title, narration-locked timing) |
+| `scenes.py` | The four Manim scenes and the shared base class (badge, title, narration-locked timing) |
 | `build.py` | Renders the scenes, exports one file per narration part where a scene has several, joins everything with cross-fades, writes captions and narration, saves stills |
 | `output/` | Final MP4s, `explainer_combined.mp4`, `narration.txt`, `captions.srt`, and `stills/` |
 
@@ -32,7 +32,7 @@ Every scene carries the badge "Illustrative data only. Fictional vendor."
 cd sourcing-explainer
 python build.py --preview          # fast 480p, 15 fps pass into output/preview
 python build.py                    # final 1920x1080, 30 fps pass into output
-python build.py --only 03_dollars  # re-render one scene, then rebuild the joined files
+python build.py --only 02_dollars  # re-render one scene, then rebuild the joined files
 ```
 
 `build.py` stops before rendering if any assert in `config.py` fails. It prints the
@@ -63,14 +63,13 @@ the start of a narration sentence (`self.at(i)` in `scenes.py`).
 | Scene | File | Seconds |
 | --- | --- | --- |
 | 0 Title | `00_title.mp4` | 3.4 |
-| 1 Too many vendors, too many places | `01_problem.mp4` | 9.4 |
-| 2 One flow, four postures | `02_flow.mp4` | 13.8 |
-| 3 From signal to dollars | `03_dollars.mp4` | 18.2 |
-| 4 Early sight, better terms | `04_action.mp4` | 17.0 |
+| 1 One view of every signal | `01_signals.mp4` | 9.0 |
+| 2 From signal to dollars | `02_dollars.mp4` | 10.6 |
+| 3 Early sight, better terms | `03_action.mp4` | 8.2 |
 
-Scenes total 61.8 seconds. The joined video is 59.8 seconds, because each of the four
-cross-fades overlaps two scenes by 0.5 seconds. To keep it near one minute after a
-script edit, aim for about 142 narration words in total.
+Scenes total 31.2 seconds. The joined video is 29.7 seconds, because each of the three
+cross-fades overlaps two scenes by 0.5 seconds. To keep it near 30 seconds after a
+script edit, keep the narration near 68 words in total.
 
 ## Line up a voiceover
 

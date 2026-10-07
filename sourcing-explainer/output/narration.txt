@@ -1,14 +1,11 @@
 Scene 0, title card (3.4 s)
 From vendor noise to sourcing decisions.
 
-Scene 1, Too many vendors, too many places (9.4 s)
-One portfolio holds 150 vendors, with signals in five separate systems. 18 need action now. No one can see them all.
+Scene 1, One view of every signal (9.0 s)
+150 vendors, five systems, 18 needing action now. The hub puts them in one Slack view, each with a posture.
 
-Scene 2, One flow, four postures (13.8 s)
-The hub reads every source. A weekly brief and an always-on warning feed one Slack hub with six agents. Every signal gets one of four postures that say what to do next.
+Scene 2, From signal to dollars (10.6 s)
+Vendor X's draft raises its price cap from 2 to 6 percent. On 1 million of spend, that adds 40,000 dollars of yearly exposure.
 
-Scene 3, From signal to dollars (18.2 s)
-Take Vendor X: fictional, with 1 million dollars of annual spend. Its renewal draft raises the price cap from 2 to 6 percent. The most it can add each year rises from 20,000 to 60,000 dollars. That is 40,000 dollars of new exposure.
-
-Scene 4, Early sight, better terms (17.0 s)
-With 90 days to renewal, the posture is Increase Leverage: ask to restore the 2 percent cap. The hub flags renewals, risks, and price changes early. Early sight turns a surprise cost into a negotiation. Early action drives the business.
+Scene 3, Early sight, better terms (8.2 s)
+Flagged 90 days out, the team asks to restore the 2 percent cap. Early action drives the business.

@@ -32,31 +32,21 @@ CROSSFADE = 0.5
 
 # Narration. Each entry is one narration part; each part is a list of sentences.
 # A scene with more than one part gets padding per part and is also exported
-# as one file per part. Total runtime is about one minute.
+# as one file per part. Total runtime is about 30 seconds.
 NARRATION = {
     "00_title": [[
         "From vendor noise to sourcing decisions.",
     ]],
-    "01_problem": [[
-        "One portfolio holds 150 vendors, with signals in five separate systems.",
-        "18 need action now.",
-        "No one can see them all.",
+    "01_signals": [[
+        "150 vendors, five systems, 18 needing action now.",
+        "The hub puts them in one Slack view, each with a posture.",
     ]],
-    "02_flow": [[
-        "The hub reads every source.",
-        "A weekly brief and an always-on warning feed one Slack hub with six agents.",
-        "Every signal gets one of four postures that say what to do next.",
+    "02_dollars": [[
+        "Vendor X's draft raises its price cap from 2 to 6 percent.",
+        "On 1 million of spend, that adds 40,000 dollars of yearly exposure.",
     ]],
-    "03_dollars": [[
-        "Take Vendor X: fictional, with 1 million dollars of annual spend.",
-        "Its renewal draft raises the price cap from 2 to 6 percent.",
-        "The most it can add each year rises from 20,000 to 60,000 dollars.",
-        "That is 40,000 dollars of new exposure.",
-    ]],
-    "04_action": [[
-        "With 90 days to renewal, the posture is Increase Leverage: ask to restore the 2 percent cap.",
-        "The hub flags renewals, risks, and price changes early.",
-        "Early sight turns a surprise cost into a negotiation.",
+    "03_action": [[
+        "Flagged 90 days out, the team asks to restore the 2 percent cap.",
         "Early action drives the business.",
     ]],
 }
@@ -64,10 +54,9 @@ NARRATION = {
 SCENE_ORDER = list(NARRATION.keys())
 SCENE_HEADINGS = {
     "00_title": "Scene 0, title card",
-    "01_problem": "Scene 1, Too many vendors, too many places",
-    "02_flow": "Scene 2, One flow, four postures",
-    "03_dollars": "Scene 3, From signal to dollars",
-    "04_action": "Scene 4, Early sight, better terms",
+    "01_signals": "Scene 1, One view of every signal",
+    "02_dollars": "Scene 2, From signal to dollars",
+    "03_action": "Scene 3, Early sight, better terms",
 }
 
 
@@ -172,22 +161,18 @@ def assert_data():
     assert len(AGENTS) == 6
 
     # Spoken numbers must match the variables.
-    words = {4: "four", 5: "five", 6: "six"}
+    words = {5: "five"}
     n = {k: " ".join(s for part in v for s in part) for k, v in NARRATION.items()}
-    assert f"{VENDOR_COUNT} vendors" in n["01_problem"]
-    assert f"{words[len(SOURCES)]} separate systems" in n["01_problem"]
-    assert f"{FLAGGED} need action now" in n["01_problem"]
-    assert f"{words[len(AGENTS)]} agents" in n["02_flow"]
-    assert f"{words[len(POSTURES)]} postures" in n["02_flow"]
-    a = n["03_dollars"]
-    assert f"{SPEND // 1000000} million dollars" in a
-    assert f"from {round(OLD_CAP * 100)} to {round(NEW_CAP * 100)} percent" in a
-    assert f"from {int(old_max):,} to {int(new_max):,} dollars" in a
-    assert f"{int(gap):,} dollars of new exposure" in a
-    b = n["04_action"]
-    assert f"{RENEWAL_DAYS} days to renewal" in b
-    assert f"posture is {CHOSEN_POSTURE}" in b
-    assert f"restore the {round(OLD_CAP * 100)} percent cap" in b
+    a = n["01_signals"]
+    assert f"{VENDOR_COUNT} vendors, {words[len(SOURCES)]} systems, {FLAGGED} needing action" in a
+    b = n["02_dollars"]
+    assert f"{VENDOR}'s draft" in b
+    assert f"from {round(OLD_CAP * 100)} to {round(NEW_CAP * 100)} percent" in b
+    assert f"On {SPEND // 1000000} million of spend" in b
+    assert f"{int(gap):,} dollars of yearly exposure" in b
+    c = n["03_action"]
+    assert f"Flagged {RENEWAL_DAYS} days out" in c
+    assert f"restore the {round(OLD_CAP * 100)} percent cap" in c
 
     # No em dash anywhere in narration.
     for parts in NARRATION.values():
